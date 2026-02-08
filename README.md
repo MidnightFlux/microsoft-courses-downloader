@@ -1,4 +1,4 @@
-# Azure Training Extract
+# Microsoft Courses Downloader
 
 A Python tool to extract learning content from Microsoft Learn courses and convert them to organized HTML and PDF files for offline reading.
 
@@ -101,3 +101,4 @@ OUTPUT_BASE_DIR = "output"
 ## License
 
 MIT License
+
