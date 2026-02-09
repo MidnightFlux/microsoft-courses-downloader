@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Describe features and tools for managing and deploying Azure resources</title>
+    <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+    h1 { color: #0078d4; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
+    h2 { color: #333; margin-top: 40px; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+    .section { margin-bottom: 40px; }
+    .section-header { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .section-header a { color: #0078d4; text-decoration: none; }
+    .section-header a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; }
+    pre { background: #f4f4f4; padding: 15px; overflow-x: auto; border-radius: 5px; }
+    code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+    table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #f5f5f5; }
+    .NOTE, .TIP { padding: 12px 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid; }
+    .NOTE { background-color: #e7f3ff; border-color: #0078d4; }
+    .NOTE > p:first-child { font-weight: bold; color: #0078d4; margin-top: 0; }
+    .TIP { background-color: #e8f5e9; border-color: #4caf50; }
+    .TIP > p:first-child { font-weight: bold; color: #2e7d32; margin-top: 0; }
+</style>
+</head>
+<body>
+    <h1>Describe features and tools for managing and deploying Azure resources</h1>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>1. Introduction</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/1-introduction">https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/1-introduction</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Introduction</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-features-tools-manage-deploy-azure-resources.introduction">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">1 minute</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>This module introduces you to features and tools for managing and deploying Azure resources. You learn about the Azure portal (a graphic interface for managing Azure resources), the command line, and scripting tools that help deploy or configure resources. You also learn about Azure services that help you manage your on-premises and multicloud environments from within Azure.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>After completing this module, you’ll be able to:</p>
+<ul>
+<li>Describe the Azure portal.</li>
+<li>Describe Azure Cloud Shell, including Azure CLI and Azure PowerShell.</li>
+<li>Describe the purpose of Azure Arc.</li>
+<li>Describe Azure Resource Manager (ARM), ARM templates, and Bicep.</li>
+</ul>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>2. Describe tools for interacting with Azure</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/2-describe-interacting-azure">https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/2-describe-interacting-azure</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe tools for interacting with Azure</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-features-tools-manage-deploy-azure-resources.describe-interacting-azure">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">5 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>To get the most out of Azure, you need a way to interact with the Azure environment, the management groups, subscriptions, resource groups, resources, and so on. Azure provides multiple tools for managing your environment, including the:</p>
+<ul>
+<li>Azure portal</li>
+<li>Azure PowerShell</li>
+<li>Azure Command Line Interface (CLI)</li>
+</ul>
+<h2 id="what-is-the-azure-portal">What is the Azure portal?</h2>
+<p>The Azure portal is a web-based, unified console that provides an alternative to command-line tools. With the Azure portal, you can manage your Azure subscription by using a graphical user interface. You can:</p>
+<ul>
+<li>Build, manage, and monitor everything from simple web apps to complex cloud deployments</li>
+<li>Create custom dashboards for an organized view of resources</li>
+<li>Configure accessibility options for an optimal experience</li>
+</ul>
+<p>The following video introduces you to the Azure portal:</p>
+<div class="embeddedvideo"><iframe allowfullscreen="true" data-linktype="external" frameborder="0" src="https://learn-video.azurefd.net/vod/player?id=8534d012-f6c0-4924-8110-dd87a3d35ff4"></iframe></div>
+<p>The Azure portal is designed for resiliency and continuous availability. It maintains a presence in every Azure datacenter. This configuration makes the Azure portal resilient to individual datacenter failures and avoids network slowdowns by being close to users. The Azure portal updates continuously and requires no downtime for maintenance activities.</p>
+<h3 id="azure-cloud-shell">Azure Cloud Shell</h3>
+<p>Azure Cloud Shell is a browser-based shell tool that allows you to create, configure, and manage Azure resources using a shell. Azure Cloud Shell support both Azure PowerShell and the Azure Command Line Interface (CLI), which is a Bash shell.</p>
+<p>You can access Azure Cloud Shell via the Azure portal by selecting the Cloud Shell icon:</p>
+<p><span class="mx-imgBorder">
+<img alt="Screenshot of the Azure portal with the Cloud Shell icon emphasized." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-features-tools-manage-deploy-azure-resources/media/cloud-shell-icon-dbf37a88.png"/>
+</span>
+</p>
+<p>Azure Cloud Shell has several features that make it a unique offering to support you in managing Azure. Some of those features are:</p>
+<ul>
+<li>It is a browser-based shell experience, with no local installation or configuration required.</li>
+<li>It is authenticated to your Azure credentials, so when you log in it inherently knows who you are and what permissions you have.</li>
+<li>You choose the shell you’re most familiar with; Azure Cloud Shell supports both Azure PowerShell and the Azure CLI (which uses Bash).</li>
+</ul>
+<h2 id="what-is-azure-powershell">What is Azure PowerShell?</h2>
+<p>Azure PowerShell is a shell with which developers, DevOps, and IT professionals can run commands called command-lets (cmdlets). These commands call the Azure REST API to perform management tasks in Azure. Cmdlets can be run independently to handle one-off changes, or they may be combined to help orchestrate complex actions such as:</p>
+<ul>
+<li>The routine setup, teardown, and maintenance of a single resource or multiple connected resources.</li>
+<li>The deployment of an entire infrastructure, which might contain dozens or hundreds of resources, from imperative code.</li>
+</ul>
+<p>Capturing the commands in a script makes the process repeatable and automatable.</p>
+<p>In addition to be available via Azure Cloud Shell, you can install and configure Azure PowerShell on Windows, Linux, and Mac platforms.</p>
+<h2 id="what-is-the-azure-cli">What is the Azure CLI?</h2>
+<p>The Azure CLI is functionally equivalent to Azure PowerShell, with the primary difference being the syntax of commands. While Azure PowerShell uses PowerShell commands, the Azure CLI uses Bash commands.</p>
+<p>The Azure CLI provides the same benefits of handling discrete tasks or orchestrating complex operations through code. It’s also installable on Windows, Linux, and Mac platforms, as well as through Azure Cloud Shell.</p>
+<p>Due to the similarities in capabilities and access between Azure PowerShell and the Bash based Azure CLI, it mainly comes down to which language you’re most familiar with.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>3. Describe the purpose of Azure Arc</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/3-describe-purpose-of-azure-arc">https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/3-describe-purpose-of-azure-arc</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe the purpose of Azure Arc</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-features-tools-manage-deploy-azure-resources.describe-purpose-of-azure-arc">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">3 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Managing hybrid and multi-cloud environments can rapidly get complicated. Azure provides a host of tools to provision, configure, and monitor Azure resources. What about the on-premises resources in a hybrid configuration or the cloud resources in a multi-cloud configuration?</p>
+<p>In utilizing Azure Resource Manager (ARM), Arc lets you extend your Azure compliance and monitoring to your hybrid and multi-cloud configurations. Azure Arc simplifies governance and management by delivering a consistent multi-cloud and on-premises management platform.</p>
+<p>Azure Arc provides a centralized, unified way to:</p>
+<ul>
+<li>Manage your entire environment together by projecting your existing non-Azure resources into ARM.</li>
+<li>Manage multi-cloud and hybrid virtual machines, Kubernetes clusters, and databases as if they are running in Azure.</li>
+<li>Use familiar Azure services and management capabilities, regardless of where they live.</li>
+<li>Continue using traditional ITOps while introducing DevOps practices to support new cloud and native patterns in your environment.</li>
+<li>Configure custom locations as an abstraction layer on top of Azure Arc-enabled Kubernetes clusters and cluster extensions.</li>
+</ul>
+<h2 id="what-can-azure-arc-do-outside-of-azure">What can Azure Arc do outside of Azure?</h2>
+<p>Currently, Azure Arc allows you to manage the following resource types hosted outside of Azure:</p>
+<ul>
+<li>Servers</li>
+<li>Kubernetes clusters</li>
+<li>Azure data services</li>
+<li>SQL Server</li>
+<li>Virtual machines (preview)</li>
+</ul>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>4. Describe Azure Resource Manager and Azure ARM templates</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/4-describe-azure-resource-manager-azure-arm-templates">https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/4-describe-azure-resource-manager-azure-arm-templates</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure Resource Manager and Azure ARM templates</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-features-tools-manage-deploy-azure-resources.describe-azure-resource-manager-azure-arm-templates">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">8 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Azure Resource Manager (ARM) is the deployment and management service for Azure. It provides a management layer that enables you to create, update, and delete resources in your Azure account. Anytime you do anything with your Azure resources, ARM is involved.</p>
+<p>When a user sends a request from any of the Azure tools, APIs, or SDKs, ARM receives the request. ARM authenticates and authorizes the request. Then, ARM sends the request to the Azure service, which takes the requested action. You see consistent results and capabilities in all the different tools because all requests are handled through the same API.</p>
+<h2 id="azure-resource-manager-benefits">Azure Resource Manager benefits</h2>
+<p>With Azure Resource Manager, you can:</p>
+<ul>
+<li>Manage your infrastructure through declarative templates rather than scripts. A Resource Manager template is a JSON file that defines what you want to deploy to Azure.</li>
+<li>Deploy, manage, and monitor all the resources for your solution as a group, rather than handling these resources individually.</li>
+<li>Re-deploy your solution throughout the development life-cycle and have confidence your resources are deployed in a consistent state.</li>
+<li>Define the dependencies between resources, so they're deployed in the correct order.</li>
+<li>Apply access control to all services because RBAC is natively integrated into the management platform.</li>
+<li>Apply tags to resources to logically organize all the resources in your subscription.</li>
+<li>Clarify your organization's billing by viewing costs for a group of resources that share the same tag.</li>
+</ul>
+<p>The following video provides an overview of Azure Resource Manager.</p>
+<div class="embeddedvideo"><iframe allowfullscreen="true" data-linktype="external" frameborder="0" src="https://learn-video.azurefd.net/vod/player?id=d257e6ec-abab-47f4-a209-22049e7a40b4"></iframe></div>
+<h2 id="infrastructure-as-code">Infrastructure as code</h2>
+<p>Infrastructure as code is a concept where you manage your infrastructure as lines of code. At an introductory level, it's things like using Azure Cloud Shell, Azure PowerShell, or the Azure CLI to manage and configure your resources. As you get more comfortable in the cloud, you can use the infrastructure as code concept to manage entire deployments using repeatable templates and configurations. ARM templates and Bicep are two examples of using infrastructure as code with the Azure Resource Manager to maintain your environment.</p>
+<h3 id="arm-templates">ARM templates</h3>
+<p>By using ARM templates, you can describe the resources you want to use in a declarative JSON format. With an ARM template, the deployment code is verified before any code is run. This ensures that the resources will be created and connected correctly. The template then orchestrates the creation of those resources in parallel. That is, if you need 50 instances of the same resource, all 50 instances are created at the same time.</p>
+<p>Ultimately, the developer, DevOps professional, or IT professional needs only to define the desired state and configuration of each resource in the ARM template, and the template does the rest. Templates can even execute PowerShell and Bash scripts before or after the resource has been set up.</p>
+<h3 id="benefits-of-using-arm-templates">Benefits of using ARM templates</h3>
+<p>ARM templates provide many benefits when planning for deploying Azure resources. Some of those benefits include:</p>
+<ul>
+<li><strong>Declarative syntax</strong>: ARM templates allow you to create and deploy an entire Azure infrastructure declaratively. Declarative syntax means you declare what you want to deploy but don’t need to write the actual programming commands and sequence to deploy the resources.</li>
+<li><strong>Repeatable results</strong>: Repeatedly deploy your infrastructure throughout the development lifecycle and have confidence your resources are deployed in a consistent manner. You can use the same ARM template to deploy multiple dev/test environments, knowing that all the environments are the same.</li>
+<li><strong>Orchestration</strong>: You don't have to worry about the complexities of ordering operations. Azure Resource Manager orchestrates the deployment of interdependent resources, so they're created in the correct order. When possible, Azure Resource Manager deploys resources in parallel, so your deployments finish faster than serial deployments. You deploy the template through one command, rather than through multiple imperative commands.</li>
+<li><strong>Modular files</strong>: You can break your templates into smaller, reusable components and link them together at deployment time. You can also nest one template inside another template. For example, you could create a template for a VM stack, and then nest that template inside of templates that deploy entire environments, and that VM stack will consistently be deployed in each of the environment templates.</li>
+<li><strong>Extensibility</strong>: With deployment scripts, you can add PowerShell or Bash scripts to your templates. The deployment scripts extend your ability to set up resources during deployment. A script can be included in the template or stored in an external source and referenced in the template. Deployment scripts give you the ability to complete your end-to-end environment setup in a single ARM template.</li>
+</ul>
+<h3 id="bicep">Bicep</h3>
+<p>Bicep is a language that uses declarative syntax to deploy Azure resources. A Bicep file defines the infrastructure and configuration. Then, ARM deploys that environment based on your Bicep file. While similar to an ARM template, which is written in JSON, Bicep files tend to use a simpler, more concise style.</p>
+<p>Some benefits of Bicep are:</p>
+<ul>
+<li><strong>Support for all resource types and API versions</strong>: Bicep immediately supports all preview and GA versions for Azure services. As soon as a resource provider introduces new resource types and API versions, you can use them in your Bicep file. You don't have to wait for tools to be updated before using the new services.</li>
+<li><strong>Simple syntax</strong>: When compared to the equivalent JSON template, Bicep files are more concise and easier to read. Bicep requires no previous knowledge of programming languages. Bicep syntax is declarative and specifies which resources and resource properties you want to deploy.</li>
+<li><strong>Repeatable results</strong>: Repeatedly deploy your infrastructure throughout the development lifecycle and have confidence your resources are deployed in a consistent manner. Bicep files are idempotent, which means you can deploy the same file many times and get the same resource types in the same state. You can develop one file that represents the desired state, rather than developing lots of separate files to represent updates.</li>
+<li><strong>Orchestration</strong>: You don't have to worry about the complexities of ordering operations. Resource Manager orchestrates the deployment of interdependent resources so they're created in the correct order. When possible, Resource Manager deploys resources in parallel so your deployments finish faster than serial deployments. You deploy the file through one command, rather than through multiple imperative commands.</li>
+<li><strong>Modularity</strong>: You can break your Bicep code into manageable parts by using modules. The module deploys a set of related resources. Modules enable you to reuse code and simplify development. Add the module to a Bicep file anytime you need to deploy those resources.</li>
+</ul>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>5. Module assessment</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/5-knowledge-check">https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/5-knowledge-check</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Module assessment</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-features-tools-manage-deploy-azure-resources.knowledge-check">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">3 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div aria-hidden="true" hidden="" id="module-unit-content">
+<p>Choose the best response for each question.</p>
+</div>
+<h2 aria-hidden="true" hidden="" id="quiz-title">Check your knowledge</h2>
+<form aria-hidden="true" aria-label="Knowledge check" class="quiz-form margin-top-xs" data-bi-name="quiz" hidden="" id="question-container" role="form">
+<fieldset class="field">
+<div role="list">
+<div class="quiz-question" data-bi-name="question" role="listitem">
+<div aria-labelledby="quiz-question-1" class="quiz-question-title font-size-md margin-top-sm margin-bottom-xs" role="radiogroup">
+<div class="margin-top-sm margin-bottom-xs field-label" id="quiz-question-1">
+<span class="font-weight-semibold">1.</span>
+<p>What service helps you manage your Azure, on-premises, and multicloud environments?</p>
+<span class="required-indicator"></span>
+</div>
+<div class="field-body">
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-0-0">
+<input class="radio-dot choice-input" id="quiz-choice-0-0" name="0" type="radio" value="0"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Azure Arc</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-0-1">
+<input class="radio-dot choice-input" id="quiz-choice-0-1" name="0" type="radio" value="1"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Azure Policy</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-0-2">
+<input class="radio-dot choice-input" id="quiz-choice-0-2" name="0" type="radio" value="2"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Azure Cloud Manager</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+</div>
+</div>
+</div>
+<div class="quiz-question" data-bi-name="question" role="listitem">
+<div aria-labelledby="quiz-question-2" class="quiz-question-title font-size-md margin-top-sm margin-bottom-xs" role="radiogroup">
+<div class="margin-top-sm margin-bottom-xs field-label" id="quiz-question-2">
+<span class="font-weight-semibold">2.</span>
+<p>What two components could you use to implement a “infrastructure as code” deployment?</p>
+<span class="required-indicator"></span>
+</div>
+<div class="field-body">
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-1-0">
+<input class="radio-dot choice-input" id="quiz-choice-1-0" name="1" type="radio" value="0"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Bicep and ARM Templates</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-1-1">
+<input class="radio-dot choice-input" id="quiz-choice-1-1" name="1" type="radio" value="1"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Azure Policy and Azure Arc</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-1-2">
+<input class="radio-dot choice-input" id="quiz-choice-1-2" name="1" type="radio" value="2"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Azure Monitor and Azure Arc</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="has-loading-skeleton" id="module-unit-quiz-submit-container"></div>
+<p class="font-size-sm color-danger font-weight-semibold margin-top-xxs is-hidden" id="unanswered-question-error" role="alert">You must answer all questions before checking your work.</p>
+<p class="visually-hidden" id="screen-reader-text"></p>
+</fieldset>
+</form>
+<form aria-hidden="true" aria-label="Knowledge check" class="margin-top-xs" data-bi-name="module-assessment" hidden="" id="module-assessment-questions-form" role="form">
+<fieldset class="field">
+<div id="module-assessment-questions-container" role="list"></div>
+<div aria-hidden="true" hidden="" id="module-assessment-objectives-container" role="list"></div>
+<div id="module-assessment-submit-container"></div>
+<p class="font-size-sm color-danger font-weight-semibold margin-top-xxs is-hidden" id="unanswered-module-assessment-question-error" role="alert">You must answer all questions before checking your work.</p>
+</fieldset>
+</form>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>6. Summary</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/6-summary">https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/6-summary</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Summary</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-features-tools-manage-deploy-azure-resources.summary">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">2 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>In this module, you were introduced to features and tools for managing and deploying Azure resources. You learned about the Azure portal (a graphic interface for managing Azure resources), command line, and scripting tools that help deploy or configure resources. You also learned about Azure services that help you manage your on-premises and multicloud environment from Azure.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>You should now be able to:</p>
+<ul>
+<li>Describe Azure portal.</li>
+<li>Describe Azure Cloud Shell, including Azure CLI and Azure PowerShell.</li>
+<li>Describe the purpose of Azure Arc.</li>
+<li>Describe Azure Resource Manager (ARM), ARM templates, and Bicep.</li>
+</ul>
+<h2 id="additional-resources">Additional resources</h2>
+<p>The following resources provide more information on topics in this module or related to this module.</p>
+<ul>
+<li><a data-linktype="absolute-path" href="/en-us/learn/paths/implement-resource-mgmt-security/">Implement resource management security</a> in Azure is a Microsoft Learn learning path that provides more information on managing Azure resources.</li>
+</ul>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+</body>
+</html>

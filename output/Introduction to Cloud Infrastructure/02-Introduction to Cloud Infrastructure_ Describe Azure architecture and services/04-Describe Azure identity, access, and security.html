@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Describe Azure identity, access, and security</title>
+    <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+    h1 { color: #0078d4; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
+    h2 { color: #333; margin-top: 40px; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+    .section { margin-bottom: 40px; }
+    .section-header { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .section-header a { color: #0078d4; text-decoration: none; }
+    .section-header a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; }
+    pre { background: #f4f4f4; padding: 15px; overflow-x: auto; border-radius: 5px; }
+    code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+    table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #f5f5f5; }
+    .NOTE, .TIP { padding: 12px 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid; }
+    .NOTE { background-color: #e7f3ff; border-color: #0078d4; }
+    .NOTE > p:first-child { font-weight: bold; color: #0078d4; margin-top: 0; }
+    .TIP { background-color: #e8f5e9; border-color: #4caf50; }
+    .TIP > p:first-child { font-weight: bold; color: #2e7d32; margin-top: 0; }
+</style>
+</head>
+<body>
+    <h1>Describe Azure identity, access, and security</h1>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>1. Introduction</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/1-introduction">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/1-introduction</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Introduction</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.introduction">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">1 minute</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>In this module, you’ll be introduced to the Azure identity, access, and security services and tools. You’ll learn about directory services in Azure, authentication methods, and access control. You’ll also cover things like Zero Trust and defense in depth, and how they keep your cloud safer. You’ll wrap up with an introduction to Microsoft Defender for Cloud.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>After completing this module, you’ll be able to:</p>
+<ul>
+<li>Describe directory services in Azure, including Microsoft Entra ID and Microsoft Entra Domain Services.</li>
+<li>Describe authentication methods in Azure, including single sign-on (SSO), multifactor authentication (MFA), and passwordless.</li>
+<li>Describe external identities and guest access in Azure.</li>
+<li>Describe Microsoft Entra Conditional Access.</li>
+<li>Describe Azure Role Based Access Control (RBAC).</li>
+<li>Describe the concept of Zero Trust.</li>
+<li>Describe the purpose of the defense in depth model.</li>
+<li>Describe the purpose of Microsoft Defender for Cloud.</li>
+</ul>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>2. Describe Azure directory services</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/2-directory-services">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/2-directory-services</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure directory services</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.directory-services">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">6 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Microsoft Entra ID is a directory service that enables you to sign in and access both Microsoft cloud applications and cloud applications that you develop. Microsoft Entra ID can also help you maintain your on-premises Active Directory deployment.</p>
+<p>For on-premises environments, Active Directory running on Windows Server provides an identity and access management service that's managed by your organization. Microsoft Entra ID is Microsoft's cloud-based identity and access management service. With Microsoft Entra ID, you control the identity accounts, but Microsoft ensures that the service is available globally. If you've worked with Active Directory, Microsoft Entra ID will be familiar to you.</p>
+<p>When you secure identities on-premises with Active Directory, Microsoft doesn't monitor sign-in attempts. When you connect Active Directory with Microsoft Entra ID, Microsoft can help protect you by detecting suspicious sign-in attempts at no extra cost. For example, Microsoft Entra ID can detect sign-in attempts from unexpected locations or unknown devices.</p>
+<h2 id="who-uses-microsoft-entra-id">Who uses Microsoft Entra ID?</h2>
+<p>Microsoft Entra ID is for:</p>
+<ul>
+<li><strong>IT administrators</strong>. Administrators can use Microsoft Entra ID to control access to applications and resources based on their business requirements.</li>
+<li><strong>App developers</strong>. Developers can use Microsoft Entra ID to provide a standards-based approach for adding functionality to applications that they build, such as adding SSO functionality to an app or enabling an app to work with a user's existing credentials.</li>
+<li><strong>Users</strong>. Users can manage their identities and take maintenance actions like self-service password reset.</li>
+<li><strong>Online service subscribers</strong>. Microsoft 365, Microsoft Office 365, Azure, and Microsoft Dynamics CRM Online subscribers are already using Microsoft Entra ID to authenticate into their account.</li>
+</ul>
+<h2 id="what-does-microsoft-entra-id-do">What does Microsoft Entra ID do?</h2>
+<p>Microsoft Entra ID provides services such as:</p>
+<ul>
+<li><strong>Authentication</strong>: This includes verifying identity to access applications and resources. It also includes providing functionality such as self-service password reset, multifactor authentication, a custom list of banned passwords, and smart lockout services.</li>
+<li><strong>Single sign-on</strong>: Single sign-on (SSO) enables you to remember only one username and one password to access multiple applications. A single identity is tied to a user, which simplifies the security model. As users change roles or leave an organization, access modifications are tied to that identity, which greatly reduces the effort needed to change or disable accounts.</li>
+<li><strong>Application management</strong>: You can manage your cloud and on-premises apps by using Microsoft Entra ID. Features like Application Proxy, SaaS apps, the My Apps portal, and single sign-on provide a better user experience.</li>
+<li><strong>Device management</strong>: Along with accounts for individual people, Microsoft Entra ID supports the registration of devices. Registration enables devices to be managed through tools like Microsoft Intune. It also allows for device-based Conditional Access policies to restrict access attempts to only those coming from known devices, regardless of the requesting user account.</li>
+</ul>
+<h2 id="can-i-connect-my-on-premises-ad-with-microsoft-entra-id">Can I connect my on-premises AD with Microsoft Entra ID?</h2>
+<p>If you had an on-premises environment running Active Directory and a cloud deployment using Microsoft Entra ID, you would need to maintain two identity sets. However, you can connect Active Directory with Microsoft Entra ID, enabling a consistent identity experience between cloud and on-premises.</p>
+<p>One method of connecting Microsoft Entra ID with your on-premises AD is using Microsoft Entra Connect. Microsoft Entra Connect synchronizes user identities between on-premises Active Directory and Microsoft Entra ID. Microsoft Entra Connect synchronizes changes between both identity systems, so you can use features like SSO, multifactor authentication, and self-service password reset under both systems.</p>
+<h2 id="what-is-microsoft-entra-domain-services">What is Microsoft Entra Domain Services?</h2>
+<p>Microsoft Entra Domain Services is a service that provides managed domain services such as domain join, group policy, lightweight directory access protocol (LDAP), and Kerberos/NTLM authentication. Just like Microsoft Entra ID lets you use directory services without having to maintain the infrastructure supporting it, with Microsoft Entra Domain Services, you get the benefit of domain services without the need to deploy, manage, and patch domain controllers (DCs) in the cloud.</p>
+<p>A Microsoft Entra Domain Services managed domain lets you run legacy applications in the cloud that can't use modern authentication methods, or where you don't want directory lookups to always go back to an on-premises AD DS environment. You can lift and shift those legacy applications from your on-premises environment into a managed domain, without needing to manage the AD DS environment in the cloud.</p>
+<p>Microsoft Entra Domain Services integrates with your existing Microsoft Entra tenant. This integration lets users sign into services and applications connected to the managed domain using their existing credentials. You can also use existing groups and user accounts to secure access to resources. These features provide a smoother lift-and-shift of on-premises resources to Azure.</p>
+<h3 id="how-does-microsoft-entra-domain-services-work">How does Microsoft Entra Domain Services work?</h3>
+<p>When you create a Microsoft Entra Domain Services managed domain, you define a unique namespace. This namespace is the domain name. Two Windows Server domain controllers are then deployed into your selected Azure region. This deployment of DCs is known as a replica set.</p>
+<p>You don't need to manage, configure, or update these DCs. The Azure platform handles the DCs as part of the managed domain, including backups and encryption at rest using Azure Disk Encryption.</p>
+<h3 id="is-information-synchronized">Is information synchronized?</h3>
+<p>A managed domain is configured to perform a one-way synchronization from Microsoft Entra ID to Microsoft Entra Domain Services. You can create resources directly in the managed domain, but they aren't synchronized back to Microsoft Entra ID. In a hybrid environment with an on-premises AD DS environment, Microsoft Entra Connect synchronizes identity information with Microsoft Entra ID, which is then synchronized to the managed domain.</p>
+<p><span class="mx-imgBorder">
+<img alt="Diagram of Microsoft Entra Connect Sync synchronizing information back to the Microsoft Entra tenant from on-premises AD." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-identity-access-security/media/azure-active-directory-sync-topology-7359f2b8-427db2d4.png"/>
+</span>
+</p>
+<p>Applications, services, and VMs in Azure that connect to the managed domain can then use common Microsoft Entra Domain Services features such as domain join, group policy, LDAP, and Kerberos/NTLM authentication.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>3. Describe Azure authentication methods</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/3-authentication-methods">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/3-authentication-methods</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure authentication methods</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.authentication-methods">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">6 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Authentication is the process of establishing the identity of a person, service, or device. It requires the person, service, or device to provide some type of credential to prove who they are. Authentication is like presenting ID when you’re traveling. It doesn’t confirm that you’re ticketed, it just proves that you're who you say you are. Azure supports multiple authentication methods, including standard passwords, single sign-on (SSO), multifactor authentication (MFA), and passwordless.</p>
+<p>For the longest time, security and convenience seemed to be at odds with each other. Thankfully, new authentication solutions provide both security and convenience.</p>
+<p>The following diagram shows the security level compared to the convenience. Notice Passwordless authentication is high security and high convenience while passwords on their own are low security but high convenience.</p>
+<p><span class="mx-imgBorder">
+<img alt="Four quadrant diagram showing security versus convenience, with Passwords + 2 Factor authentication being high security but low convenience." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-identity-access-security/media/passwordless-convenience-security-30321b4d-18aa7d73.png"/>
+</span>
+</p>
+<h2 id="whats-single-sign-on">What's single sign-on?</h2>
+<p>Single sign-on (SSO) enables a user to sign in one time and use that credential to access multiple resources and applications from different providers. For SSO to work, the different applications and providers must trust the initial authenticator.</p>
+<p>More identities mean more passwords to remember and change. Password policies can vary among applications. As complexity requirements increase, it becomes increasingly difficult for users to remember them. The more passwords a user has to manage, the greater the risk of a credential-related security incident.</p>
+<p>Consider the process of managing all those identities. More strain is placed on help desks as they deal with account lockouts and password reset requests. If a user leaves an organization, tracking down all those identities and ensuring they're disabled can be challenging. If an identity is overlooked, this might allow access when it should have been eliminated.</p>
+<p>With SSO, you need to remember only one ID and one password. Access across applications is granted to a single identity that's tied to the user, which simplifies the security model. As users change roles or leave an organization, access is tied to a single identity. This change greatly reduces the effort needed to change or disable accounts. Using SSO for accounts makes it easier for users to manage their identities and for IT to manage users.</p>
+<div class="IMPORTANT">
+<p>Important</p>
+<p>Single sign-on is only as secure as the initial authenticator because the subsequent connections are all based on the security of the initial authenticator.</p>
+</div>
+<h2 id="whats-multifactor-authentication">What’s multifactor authentication?</h2>
+<p>Multifactor authentication is the process of prompting a user for an extra form (or factor) of identification during the sign-in process. MFA helps protect against a password compromise in situations where the password was compromised but the second factor wasn't.</p>
+<p>Think about how you sign into websites, email, or online services. After entering your username and password, have you ever needed to enter a code that was sent to your phone? If so, you've used multifactor authentication to sign in.</p>
+<p>Multifactor authentication provides additional security for your identities by requiring two or more elements to fully authenticate. These elements fall into three categories:</p>
+<ul>
+<li>Something the user knows – this might be a challenge question.</li>
+<li>Something the user has – this might be a code that's sent to the user's mobile phone.</li>
+<li>Something the user is – this is typically some sort of biometric property, such as a fingerprint or face scan.</li>
+</ul>
+<p>Multifactor authentication increases identity security by limiting the impact of credential exposure (for example, stolen usernames and passwords). With multifactor authentication enabled, an attacker who has a user's password would also need to have possession of their phone or their fingerprint to fully authenticate.</p>
+<p>Compare multifactor authentication with single-factor authentication. Under single-factor authentication, an attacker would need only a username and password to authenticate. Multifactor authentication should be enabled wherever possible because it adds enormous benefits to security.</p>
+<h3 id="whats-microsoft-entra-multifactor-authentication">What's Microsoft Entra multifactor authentication?</h3>
+<p>Microsoft Entra multifactor authentication is a Microsoft service that provides multifactor authentication capabilities. Microsoft Entra multifactor authentication enables users to choose an additional form of authentication during sign-in, such as a phone call or mobile app notification.</p>
+<h2 id="whats-passwordless-authentication">What’s passwordless authentication?</h2>
+<p>Features like MFA are a great way to secure your organization, but users often get frustrated with the additional security layer on top of having to remember their passwords. People are more likely to comply when it's easy and convenient to do so. Passwordless authentication methods are more convenient because the password is removed and replaced with something you have, plus something you are, or something you know.</p>
+<p>Passwordless authentication needs to be set up on a device before it can work. For example, your computer is something you have. Once it’s been registered or enrolled, Azure now knows that it’s associated with you. Now that the computer is known, once you provide something you know or are (such as a PIN or fingerprint), you can be authenticated without using a password.</p>
+<p>Each organization has different needs when it comes to authentication. Microsoft global Azure and Azure Government offer the following three passwordless authentication options that integrate with Microsoft Entra ID:</p>
+<ul>
+<li>Windows Hello for Business</li>
+<li>Microsoft Authenticator app</li>
+<li>FIDO2 security keys</li>
+</ul>
+<h3 id="windows-hello-for-business">Windows Hello for Business</h3>
+<p>Windows Hello for Business is ideal for information workers that have their own designated Windows PC. The biometric and PIN credentials are directly tied to the user's PC, which prevents access from anyone other than the owner. With public key infrastructure (PKI) integration and built-in support for single sign-on (SSO), Windows Hello for Business provides a convenient method for seamlessly accessing corporate resources on-premises and in the cloud.</p>
+<h3 id="microsoft-authenticator-app">Microsoft Authenticator App</h3>
+<p>You can also allow your employee's phone to become a passwordless authentication method. You may already be using the Microsoft Authenticator App as a convenient multifactor authentication option in addition to a password. You can also use the Authenticator App as a passwordless option.</p>
+<p>The Authenticator App turns any iOS or Android phone into a strong, passwordless credential. Users can sign-in to any platform or browser by getting a notification to their phone, matching a number displayed on the screen to the one on their phone, and then using their biometric (touch or face) or PIN to confirm. Refer to Download and install the Microsoft Authenticator app for installation details.</p>
+<h3 id="fido2-security-keys">FIDO2 security keys</h3>
+<p>The FIDO (Fast IDentity Online) Alliance helps to promote open authentication standards and reduce the use of passwords as a form of authentication. FIDO2 is the latest standard that incorporates the web authentication (WebAuthn) standard.</p>
+<p>FIDO2 security keys are an unphishable standards-based passwordless authentication method that can come in any form factor. Fast Identity Online (FIDO) is an open standard for passwordless authentication. FIDO allows users and organizations to leverage the standard to sign-in to their resources without a username or password by using an external security key or a platform key built into a device.</p>
+<p>Users can register and then select a FIDO2 security key at the sign-in interface as their main means of authentication. These FIDO2 security keys are typically USB devices, but could also use Bluetooth or NFC. With a hardware device that handles the authentication, the security of an account is increased as there's no password that could be exposed or guessed.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>4. Describe Azure external identities</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/4-external-identities">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/4-external-identities</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure external identities</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.external-identities">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">3 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>An external identity is a person, device, service, etc. that is outside your organization. Microsoft Entra External ID refers to all the ways you can securely interact with users outside of your organization. If you want to collaborate with partners, distributors, suppliers, or vendors, you can share your resources and define how your internal users can access external organizations. If you're a developer creating consumer-facing apps, you can manage your customers' identity experiences.</p>
+<p>External identities may sound similar to single sign-on. With External Identities, external users can "bring their own identities." Whether they have a corporate or government-issued digital identity, or an unmanaged social identity like Google or Facebook, they can use their own credentials to sign in. The external user’s identity provider manages their identity, and you manage access to your apps with Microsoft Entra ID or Azure AD B2C to keep your resources protected.</p>
+<p><span class="mx-imgBorder">
+<img alt="Diagram showing B2B collaborators accessing your tenant and B2C collaborators accessing the AD B2C tenant." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-identity-access-security/media/azure-active-directory-external-identities-5a892021-ca79a69c.png"/>
+</span>
+</p>
+<p>The following capabilities make up External Identities:</p>
+<ul>
+<li><strong>Business to business (B2B) collaboration</strong> - Collaborate with external users by letting them use their preferred identity to sign-in to your Microsoft applications or other enterprise applications (SaaS apps, custom-developed apps, etc.). B2B collaboration users are represented in your directory, typically as guest users.</li>
+<li><strong>B2B direct connect</strong> - Establish a mutual, two-way trust with another Microsoft Entra organization for seamless collaboration. B2B direct connect currently supports Teams shared channels, enabling external users to access your resources from within their home instances of Teams. B2B direct connect users aren't represented in your directory, but they're visible from within the Teams shared channel and can be monitored in Teams admin center reports.</li>
+<li><strong>Microsoft Azure Active Directory business to customer (B2C)</strong> - Publish modern SaaS apps or custom-developed apps (excluding Microsoft apps) to consumers and customers, while using Azure AD B2C for identity and access management.</li>
+</ul>
+<p>Depending on how you want to interact with external organizations and the types of resources you need to share, you can use a combination of these capabilities.</p>
+<p>With Microsoft Entra ID, you can easily enable collaboration across organizational boundaries by using the Microsoft Entra B2B feature. Guest users from other tenants can be invited by administrators or by other users. This capability also applies to social identities such as Microsoft accounts.</p>
+<p>You also can easily ensure that guest users have appropriate access. You can ask the guests themselves or a decision maker to participate in an access review and recertify (or attest) to the guests' access. The reviewers can give their input on each user's need for continued access, based on suggestions from Microsoft Entra ID. When an access review is finished, you can then make changes and remove access for guests who no longer need it.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>5. Describe Azure conditional access</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/5-conditional-access">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/5-conditional-access</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure conditional access</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.conditional-access">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">3 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Conditional Access is a tool that Microsoft Entra ID uses to allow (or deny) access to resources based on identity signals. These signals include who the user is, where the user is, and what device the user is requesting access from.</p>
+<p>Conditional Access helps IT administrators:</p>
+<ul>
+<li>Empower users to be productive wherever and whenever.</li>
+<li>Protect the organization's assets.</li>
+</ul>
+<p>Conditional Access also provides a more granular multifactor authentication experience for users. For example, a user might not be challenged for second authentication factor if they're at a known location. However, they might be challenged for a second authentication factor if their sign-in signals are unusual or they're at an unexpected location.</p>
+<p>During sign-in, Conditional Access collects signals from the user, makes decisions based on those signals, and then enforces that decision by allowing or denying the access request or challenging for a multifactor authentication response.</p>
+<p>The following diagram illustrates this flow:</p>
+<p><span class="mx-imgBorder">
+<img alt="Diagram showing the conditional access flow of a signal leading to a decision, leading to enforcement." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-identity-access-security/media/conditional-access-9bd268b8-757297cb.png"/>
+</span>
+</p>
+<p>Here, the signal might be the user's location, the user's device, or the application that the user is trying to access.</p>
+<p>Based on these signals, the decision might be to allow full access if the user is signing in from their usual location. If the user is signing in from an unusual location or a location that's marked as high risk, then access might be blocked entirely or possibly granted after the user provides a second form of authentication.</p>
+<p>Enforcement is the action that carries out the decision. For example, the action is to allow access or require the user to provide a second form of authentication.</p>
+<h2 id="when-can-i-use-conditional-access">When can I use Conditional Access?</h2>
+<p>Conditional Access is useful when you need to:</p>
+<ul>
+<li>Require multifactor authentication (MFA) to access an application depending on the requester’s role, location, or network. For example, you could require MFA for administrators but not regular users or for people connecting from outside your corporate network.</li>
+<li>Require access to services only through approved client applications. For example, you could limit which email applications are able to connect to your email service.</li>
+<li>Require users to access your application only from managed devices. A managed device is a device that meets your standards for security and compliance.</li>
+<li>Block access from untrusted sources, such as access from unknown or unexpected locations.</li>
+</ul>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>6. Describe Azure role-based access control</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/6-role-based-access-control">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/6-role-based-access-control</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure role-based access control</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.role-based-access-control">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">5 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>When you have multiple IT and engineering teams, how can you control what access they have to the resources in your cloud environment? The principle of least privilege says you should only grant access up to the level needed to complete a task. If you only need read access to a storage blob, then you should only be granted read access to that storage blob. Write access to that blob shouldn’t be granted, nor should read access to other storage blobs. It’s a good security practice to follow.</p>
+<p>However, managing that level of permissions for an entire team would become tedious. Instead of defining the detailed access requirements for each individual, and then updating access requirements when new resources are created or new people join the team, Azure enables you to control access through Azure role-based access control (Azure RBAC).</p>
+<p>Azure provides built-in roles that describe common access rules for cloud resources. You can also define your own roles. Each role has an associated set of access permissions that relate to that role. When you assign individuals or groups to one or more roles, they receive all the associated access permissions.</p>
+<p>So, if you hire a new engineer and add them to the Azure RBAC group for engineers, they automatically get the same access as the other engineers in the same Azure RBAC group. Similarly, if you add additional resources and point Azure RBAC at them, everyone in that Azure RBAC group will now have those permissions on the new resources as well as the existing resources.</p>
+<h2 id="how-is-role-based-access-control-applied-to-resources">How is role-based access control applied to resources?</h2>
+<p>Role-based access control is applied to a scope, which is a resource or set of resources that this access applies to.</p>
+<p>The following diagram shows the relationship between roles and scopes. A management group, subscription, or resource group might be given the role of owner, so they have increased control and authority. An observer, who isn't expected to make any updates, might be given a role of Reader for the same scope, enabling them to review or observe the management group, subscription, or resource group.</p>
+<p><span class="mx-imgBorder">
+<img alt="A diagram showing scopes and roles. Role and scope combinations map to a specific kind of user or account, such as an observer or an admin." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-identity-access-security/media/role-based-access-scope-4b12a8f3-7f40fc55.png"/>
+</span>
+</p>
+<p>Scopes include:</p>
+<ul>
+<li>A management group (a collection of multiple subscriptions).</li>
+<li>A single subscription.</li>
+<li>A resource group.</li>
+<li>A single resource.</li>
+</ul>
+<p>Observers, users managing resources, admins, and automated processes illustrate the kinds of users or accounts that would typically be assigned each of the various roles.</p>
+<p>Azure RBAC is hierarchical, in that when you grant access at a parent scope, those permissions are inherited by all child scopes. For example:</p>
+<ul>
+<li>When you assign the Owner role to a user at the management group scope, that user can manage everything in all subscriptions within the management group.</li>
+<li>When you assign the Reader role to a group at the subscription scope, the members of that group can view every resource group and resource within the subscription.</li>
+</ul>
+<h2 id="how-is-azure-rbac-enforced">How is Azure RBAC enforced?</h2>
+<p>Azure RBAC is enforced on any action that's initiated against an Azure resource that passes through Azure Resource Manager. Resource Manager is a management service that provides a way to organize and secure your cloud resources.</p>
+<p>You typically access Resource Manager from the Azure portal, Azure Cloud Shell, Azure PowerShell, and the Azure CLI. Azure RBAC doesn't enforce access permissions at the application or data level. Application security must be handled by your application.</p>
+<p>Azure RBAC uses an allow model. When you're assigned a role, Azure RBAC allows you to perform actions within the scope of that role. If one role assignment grants you read permissions to a resource group and a different role assignment grants you write permissions to the same resource group, you have both read and write permissions on that resource group.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>7. Describe Zero Trust model</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/7-describe-zero-trust-model">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/7-describe-zero-trust-model</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Zero Trust model</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.describe-zero-trust-model">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">3 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Zero Trust is a security model that assumes the worst case scenario and protects resources with that expectation. Zero Trust assumes breach at the outset, and then verifies each request as though it originated from an uncontrolled network.</p>
+<p>Today, organizations need a new security model that effectively adapts to the complexity of the modern environment; embraces the mobile workforce; and protects people, devices, applications, and data wherever they're located.</p>
+<p>To address this new world of computing, Microsoft highly recommends the Zero Trust security model, which is based on these guiding principles:</p>
+<ul>
+<li><strong>Verify explicitly</strong> - Always authenticate and authorize based on all available data points.</li>
+<li><strong>Use least privilege access</strong> - Limit user access with Just-In-Time and Just-Enough-Access (JIT/JEA), risk-based adaptive policies, and data protection.</li>
+<li><strong>Assume breach</strong> - Minimize blast radius and segment access. Verify end-to-end encryption. Use analytics to get visibility, drive threat detection, and improve defenses.</li>
+</ul>
+<h2 id="adjusting-to-zero-trust">Adjusting to Zero Trust</h2>
+<p>Traditionally, corporate networks were restricted, protected, and generally assumed safe. Only managed computers could join the network, VPN access was tightly controlled, and personal devices were frequently restricted or blocked.</p>
+<p>The Zero Trust model flips that scenario. Instead of assuming that a device is safe because it’s within the corporate network, it requires everyone to authenticate. Then grants access based on authentication rather than location.</p>
+<p><span class="mx-imgBorder">
+<img alt="Diagram comparing Zero Trust authenticating everyone compared to classic relying on network location." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-identity-access-security/media/zero-trust-cf9202be-d5c6882e.png"/>
+</span>
+</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>8. Describe defense-in-depth</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/8-describe-defense-depth">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/8-describe-defense-depth</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe defense-in-depth</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.describe-defense-depth">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">4 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>The objective of defense-in-depth is to protect information and prevent it from being stolen by those who aren't authorized to access it.</p>
+<p>A defense-in-depth strategy uses a series of mechanisms to slow the advance of an attack that aims at acquiring unauthorized access to data.</p>
+<h2 id="layers-of-defense-in-depth">Layers of defense-in-depth</h2>
+<p>You can visualize defense-in-depth as a set of layers, with the data to be secured at the center and all the other layers functioning to protect that central data layer.</p>
+<p><span class="mx-imgBorder">
+<img alt="A diagram showing the defense in depth layers. From the center: data, application, compute, network, perimeter, identity &amp; access, physical security." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-identity-access-security/media/defense-depth-486afc12-71a03f12.png"/>
+</span>
+</p>
+<p>Each layer provides protection so that if one layer is breached, a subsequent layer is already in place to prevent further exposure. This approach removes reliance on any single layer of protection. It slows down an attack and provides alert information that security teams can act upon, either automatically or manually.</p>
+<p>Here's a brief overview of the role of each layer:</p>
+<ul>
+<li>The physical security layer is the first line of defense to protect computing hardware in the datacenter.</li>
+<li>The identity and access layer controls access to infrastructure and change control.</li>
+<li>The perimeter layer uses distributed denial of service (DDoS) protection to filter large-scale attacks before they can cause a denial of service for users.</li>
+<li>The network layer limits communication between resources through segmentation and access controls.</li>
+<li>The compute layer secures access to virtual machines.</li>
+<li>The application layer helps ensure that applications are secure and free of security vulnerabilities.</li>
+<li>The data layer controls access to business and customer data that you need to protect.</li>
+</ul>
+<p>These layers provide a guideline for you to help make security configuration decisions in all of the layers of your applications.</p>
+<p>Azure provides security tools and features at every level of the defense-in-depth concept. Let's take a closer look at each layer:</p>
+<h3 id="physical-security">Physical security</h3>
+<p>Physically securing access to buildings and controlling access to computing hardware within the datacenter are the first line of defense.</p>
+<p>With physical security, the intent is to provide physical safeguards against access to assets. These safeguards ensure that other layers can't be bypassed, and loss or theft is handled appropriately. Microsoft uses various physical security mechanisms in its cloud datacenters.</p>
+<h3 id="identity-and-access">Identity and access</h3>
+<p>The identity and access layer is all about ensuring that identities are secure, that access is granted only to what's needed, and that sign-in events and changes are logged.</p>
+<p>At this layer, it's important to:</p>
+<ul>
+<li>Control access to infrastructure and change control.</li>
+<li>Use single sign-on (SSO) and multifactor authentication.</li>
+<li>Audit events and changes.</li>
+</ul>
+<h3 id="perimeter">Perimeter</h3>
+<p>The network perimeter protects from network-based attacks against your resources. Identifying these attacks, eliminating their impact, and alerting you when they happen are important ways to keep your network secure.</p>
+<p>At this layer, it's important to:</p>
+<ul>
+<li>Use DDoS protection to filter large-scale attacks before they can affect the availability of a system for users.</li>
+<li>Use perimeter firewalls to identify and alert on malicious attacks against your network.</li>
+</ul>
+<h3 id="network">Network</h3>
+<p>At this layer, the focus is on limiting the network connectivity across all your resources to allow only what's required. By limiting this communication, you reduce the risk of an attack spreading to other systems in your network.</p>
+<p>At this layer, it's important to:</p>
+<ul>
+<li>Limit communication between resources.</li>
+<li>Deny by default.</li>
+<li>Restrict inbound internet access and limit outbound access where appropriate.</li>
+<li>Implement secure connectivity to on-premises networks.</li>
+</ul>
+<h3 id="compute">Compute</h3>
+<p>Malware, unpatched systems, and improperly secured systems open your environment to attacks. The focus in this layer is on making sure that your compute resources are secure and that you have the proper controls in place to minimize security issues.</p>
+<p>At this layer, it's important to:</p>
+<ul>
+<li>Secure access to virtual machines.</li>
+<li>Implement endpoint protection on devices and keep systems patched and current.</li>
+</ul>
+<h3 id="application">Application</h3>
+<p>Integrating security into the application development lifecycle helps reduce the number of vulnerabilities introduced in code. Every development team should ensure that its applications are secure by default.</p>
+<p>At this layer, it's important to:</p>
+<ul>
+<li>Ensure that applications are secure and free of vulnerabilities.</li>
+<li>Store sensitive application secrets in a secure storage medium.</li>
+<li>Make security a design requirement for all application development.</li>
+</ul>
+<h3 id="data">Data</h3>
+<p>Those who store and control access to data are responsible for ensuring that it's properly secured. Often, regulatory requirements dictate the controls and processes that must be in place to ensure the confidentiality, integrity, and availability of the data.</p>
+<p>In almost all cases, attackers are after data:</p>
+<ul>
+<li>Stored in a database.</li>
+<li>Stored on disk inside virtual machines.</li>
+<li>Stored in software as a service (SaaS) applications, such as Office 365.</li>
+<li>Managed through cloud storage.</li>
+</ul>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>9. Describe Microsoft Defender for Cloud</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/9-describe-microsoft-defender-for-cloud">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/9-describe-microsoft-defender-for-cloud</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Microsoft Defender for Cloud</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.describe-microsoft-defender-for-cloud">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">6 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Defender for Cloud is a monitoring tool for security posture management and threat protection. It monitors your cloud, on-premises, hybrid, and multicloud environments to provide guidance and notifications aimed at strengthening your security posture.</p>
+<p>Defender for Cloud provides the tools needed to harden your resources, track your security posture, protect against cyber attacks, and streamline security management. Deployment of Defender for Cloud is easy, it’s already natively integrated to Azure.</p>
+<h2 id="protection-everywhere-youre-deployed">Protection everywhere you’re deployed</h2>
+<p>Because Defender for Cloud is an Azure-native service, many Azure services are monitored and protected without needing any deployment. However, if you also have an on-premises datacenter or are also operating in another cloud environment, monitoring of Azure services may not give you a complete picture of your security situation.</p>
+<p>When necessary, Defender for Cloud can automatically deploy a Log Analytics agent to gather security-related data. For Azure machines, deployment is handled directly. For hybrid and multicloud environments, Microsoft Defender plans are extended to non-Azure machines with the help of Azure Arc. Cloud security posture management (CSPM) features are extended to multicloud machines without the need for any agents.</p>
+<h3 id="azure-native-protections">Azure-native protections</h3>
+<p>Defender for Cloud helps you detect threats across:</p>
+<ul>
+<li>Azure PaaS services – Detect threats targeting Azure services including Azure App Service, Azure SQL, Azure Storage Account, and more data services. You can also perform anomaly detection on your Azure activity logs using the native integration with Microsoft Defender for Cloud Apps (formerly known as Microsoft Cloud App Security).</li>
+<li>Azure data services – Defender for Cloud includes capabilities that help you automatically classify your data in Azure SQL. You can also get assessments for potential vulnerabilities across Azure SQL and Storage services, and recommendations for how to mitigate them.</li>
+<li>Networks – Defender for Cloud helps you limit exposure to brute force attacks. By reducing access to virtual machine ports, using the just-in-time VM access, you can harden your network by preventing unnecessary access. You can set secure access policies on selected ports, for only authorized users, allowed source IP address ranges or IP addresses, and for a limited amount of time.</li>
+</ul>
+<h3 id="defend-your-hybrid-resources">Defend your hybrid resources</h3>
+<p>In addition to defending your Azure environment, you can add Defender for Cloud capabilities to your hybrid cloud environment to protect your non-Azure servers. To help you focus on what matters the most, you'll get customized threat intelligence and prioritized alerts according to your specific environment.</p>
+<p>To extend protection to on-premises machines, deploy Azure Arc and enable Defender for Cloud's enhanced security features.</p>
+<h3 id="defend-resources-running-on-other-clouds">Defend resources running on other clouds</h3>
+<p>Defender for Cloud can also protect resources in other clouds (such as AWS and GCP).</p>
+<p>For example, if you've connected an Amazon Web Services (AWS) account to an Azure subscription, you can enable any of these protections:</p>
+<ul>
+<li>Defender for Cloud's CSPM features extend to your AWS resources. This agentless plan assesses your AWS resources according to AWS-specific security recommendations, and includes the results in the secure score. The resources will also be assessed for compliance with built-in standards specific to AWS (AWS CIS, AWS PCI DSS, and AWS Foundational Security Best Practices). Defender for Cloud's asset inventory page is a multicloud enabled feature helping you manage your AWS resources alongside your Azure resources.</li>
+<li>Microsoft Defender for Containers extends its container threat detection and advanced defenses to your Amazon EKS Linux clusters.</li>
+<li>Microsoft Defender for Servers brings threat detection and advanced defenses to your Windows and Linux EC2 instances.</li>
+</ul>
+<h2 id="assess-secure-and-defend">Assess, Secure, and Defend</h2>
+<p>Defender for Cloud fills three vital needs as you manage the security of your resources and workloads in the cloud and on-premises:</p>
+<ul>
+<li>Continuously assess – Know your security posture. Identify and track vulnerabilities.</li>
+<li>Secure – Harden resources and services with Azure Security Benchmark.</li>
+<li>Defend – Detect and resolve threats to resources, workloads, and services.</li>
+</ul>
+<p><span class="mx-imgBorder">
+<img alt="Diagram reinforcing assess, secure, and defend." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-identity-access-security/media/assess-secure-defend-46228306-c726aca3.png"/>
+</span>
+</p>
+<h3 id="continuously-assess">Continuously assess</h3>
+<p>Defender for cloud helps you continuously assess your environment. Defender for Cloud includes vulnerability assessment solutions for your virtual machines, container registries, and SQL servers.</p>
+<p>Microsoft Defender for servers includes automatic, native integration with Microsoft Defender for Endpoint. With this integration enabled, you'll have access to the vulnerability findings from Microsoft threat and vulnerability management.</p>
+<p>Between these assessment tools you’ll have regular, detailed vulnerability scans that cover your compute, data, and infrastructure. You can review and respond to the results of these scans all from within Defender for Cloud.</p>
+<h3 id="secure">Secure</h3>
+<p>From authentication methods to access control to the concept of Zero Trust, security in the cloud is an essential basic that must be done right. In order to be secure in the cloud, you have to ensure your workloads are secure. To secure your workloads, you need security policies in place that are tailored to your environment and situation. Because policies in Defender for Cloud are built on top of Azure Policy controls, you're getting the full range and flexibility of a world-class policy solution. In Defender for Cloud, you can set your policies to run on management groups, across subscriptions, and even for a whole tenant.</p>
+<p>One of the benefits of moving to the cloud is the ability to grow and scale as you need, adding new services and resources as necessary. Defender for Cloud is constantly monitoring for new resources being deployed across your workloads. Defender for Cloud assesses if new resources are configured according to security best practices. If not, they're flagged and you get a prioritized list of recommendations for what you need to fix. Recommendations help you reduce the attack surface across each of your resources.</p>
+<p>The list of recommendations is enabled and supported by the Azure Security Benchmark. This Microsoft-authored, Azure-specific, benchmark provides a set of guidelines for security and compliance best practices based on common compliance frameworks.</p>
+<p>In this way, Defender for Cloud enables you not just to set security policies, but to apply secure configuration standards across your resources.</p>
+<p>To help you understand how important each recommendation is to your overall security posture, Defender for Cloud groups the recommendations into security controls and adds a secure score value to each control. The secure score gives you an at-a-glance indicator of the health of your security posture, while the controls give you a working list of things to consider to improve your security score and your overall security posture.</p>
+<p><span class="mx-imgBorder">
+<img alt="Screenshot showing the Microsoft Defender for Cloud secure score." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-identity-access-security/media/defender-for-cloud-d47a71d8-d1cc9fa3.png"/>
+</span>
+</p>
+<h3 id="defend">Defend</h3>
+<p>The first two areas were focused on assessing, monitoring, and maintaining your environment. Defender for Cloud also helps you defend your environment by providing security alerts and advanced threat protection features.</p>
+<h4 id="security-alerts">Security alerts</h4>
+<p>When Defender for Cloud detects a threat in any area of your environment, it generates a security alert. Security alerts:</p>
+<ul>
+<li>Describe details of the affected resources</li>
+<li>Suggest remediation steps</li>
+<li>Provide, in some cases, an option to trigger a logic app in response</li>
+</ul>
+<p>Whether an alert is generated by Defender for Cloud or received by Defender for Cloud from an integrated security product, you can export it. Defender for Cloud's threat protection includes fusion kill-chain analysis, which automatically correlates alerts in your environment based on cyber kill-chain analysis, to help you better understand the full story of an attack campaign, where it started, and what kind of impact it had on your resources.</p>
+<h4 id="advanced-threat-protection">Advanced threat protection</h4>
+<p>Defender for cloud provides advanced threat protection features for many of your deployed resources, including virtual machines, SQL databases, containers, web applications, and your network. Protections include securing the management ports of your VMs with just-in-time access, and adaptive application controls to create allowlists for what apps should and shouldn't run on your machines.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>10. Module assessment</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/10-knowledge-check">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/10-knowledge-check</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Module assessment</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.knowledge-check">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">4 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div aria-hidden="true" hidden="" id="module-unit-content">
+<p>Choose the best response for each question.</p>
+</div>
+<h2 aria-hidden="true" hidden="" id="quiz-title">Check your knowledge</h2>
+<form aria-hidden="true" aria-label="Knowledge check" class="quiz-form margin-top-xs" data-bi-name="quiz" hidden="" id="question-container" role="form">
+<fieldset class="field">
+<div role="list">
+<div class="quiz-question" data-bi-name="question" role="listitem">
+<div aria-labelledby="quiz-question-1" class="quiz-question-title font-size-md margin-top-sm margin-bottom-xs" role="radiogroup">
+<div class="margin-top-sm margin-bottom-xs field-label" id="quiz-question-1">
+<span class="font-weight-semibold">1.</span>
+<p>Which Microsoft Entra tool can vary the credentials needed to log in based on signals, such as where the user is located?</p>
+<span class="required-indicator"></span>
+</div>
+<div class="field-body">
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-0-0">
+<input class="radio-dot choice-input" id="quiz-choice-0-0" name="0" type="radio" value="0"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Conditional Access</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-0-1">
+<input class="radio-dot choice-input" id="quiz-choice-0-1" name="0" type="radio" value="1"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Guest access</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-0-2">
+<input class="radio-dot choice-input" id="quiz-choice-0-2" name="0" type="radio" value="2"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Passwordless</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+</div>
+</div>
+</div>
+<div class="quiz-question" data-bi-name="question" role="listitem">
+<div aria-labelledby="quiz-question-2" class="quiz-question-title font-size-md margin-top-sm margin-bottom-xs" role="radiogroup">
+<div class="margin-top-sm margin-bottom-xs field-label" id="quiz-question-2">
+<span class="font-weight-semibold">2.</span>
+<p>Which security model assumes the worst-case security scenario, and protects resources accordingly?</p>
+<span class="required-indicator"></span>
+</div>
+<div class="field-body">
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-1-0">
+<input class="radio-dot choice-input" id="quiz-choice-1-0" name="1" type="radio" value="0"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Zero Trust</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-1-1">
+<input class="radio-dot choice-input" id="quiz-choice-1-1" name="1" type="radio" value="1"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Defense-in-depth</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-1-2">
+<input class="radio-dot choice-input" id="quiz-choice-1-2" name="1" type="radio" value="2"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Role-based access control</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+</div>
+</div>
+</div>
+<div class="quiz-question" data-bi-name="question" role="listitem">
+<div aria-labelledby="quiz-question-3" class="quiz-question-title font-size-md margin-top-sm margin-bottom-xs" role="radiogroup">
+<div class="margin-top-sm margin-bottom-xs field-label" id="quiz-question-3">
+<span class="font-weight-semibold">3.</span>
+<p>A user is simultaneously assigned multiple roles that use role-based access control. What are their actual permissions? The role permissions are: Role 1 - read || Role 2 - write || Role 3 - read and write.</p>
+<span class="required-indicator"></span>
+</div>
+<div class="field-body">
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-2-0">
+<input class="radio-dot choice-input" id="quiz-choice-2-0" name="2" type="radio" value="0"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Read only</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-2-1">
+<input class="radio-dot choice-input" id="quiz-choice-2-1" name="2" type="radio" value="1"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Write only</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-2-2">
+<input class="radio-dot choice-input" id="quiz-choice-2-2" name="2" type="radio" value="2"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Read and write</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="has-loading-skeleton" id="module-unit-quiz-submit-container"></div>
+<p class="font-size-sm color-danger font-weight-semibold margin-top-xxs is-hidden" id="unanswered-question-error" role="alert">You must answer all questions before checking your work.</p>
+<p class="visually-hidden" id="screen-reader-text"></p>
+</fieldset>
+</form>
+<form aria-hidden="true" aria-label="Knowledge check" class="margin-top-xs" data-bi-name="module-assessment" hidden="" id="module-assessment-questions-form" role="form">
+<fieldset class="field">
+<div id="module-assessment-questions-container" role="list"></div>
+<div aria-hidden="true" hidden="" id="module-assessment-objectives-container" role="list"></div>
+<div id="module-assessment-submit-container"></div>
+<p class="font-size-sm color-danger font-weight-semibold margin-top-xxs is-hidden" id="unanswered-module-assessment-question-error" role="alert">You must answer all questions before checking your work.</p>
+</fieldset>
+</form>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>11. Summary</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/11-summary">https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/11-summary</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Summary</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-identity-access-security.summary">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">2 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>In this module, you learned about Azure identity, access, and security services and tools. You covered authentication methods, including which ones are more secure. You learned about restricting access based on a role to help create a more secure environment. And, you learned about the Defense In Depth and Zero Trust models.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>You should now be able to:</p>
+<ul>
+<li>Describe directory services in Azure, including Microsoft Entra ID and Microsoft Entra Domain Services.</li>
+<li>Describe authentication methods in Azure, including single sign-on (SSO), multifactor authentication (MFA), and passwordless.</li>
+<li>Describe external identities and guest access in Azure.</li>
+<li>Describe Microsoft Entra Conditional Access.</li>
+<li>Describe Azure Role Based Access Control (RBAC).</li>
+<li>Describe the concept of Zero Trust.</li>
+<li>Describe the purpose of the defense in depth model.</li>
+<li>Describe the purpose of Microsoft Defender for Cloud.</li>
+</ul>
+<h2 id="additional-resources">Additional resources</h2>
+<p>The following resources provide more information on topics in this module or related to this module.<br/><a data-linktype="absolute-path" href="/en-us/learn/certifications/security-compliance-and-identity-fundamentals/">Microsoft Certified: Security, Compliance, and Identity Fundamentals</a> is an entire certification, with associated training, dedicated to helping you better understand and manage Security, Compliance, and identity.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+</body>
+</html>

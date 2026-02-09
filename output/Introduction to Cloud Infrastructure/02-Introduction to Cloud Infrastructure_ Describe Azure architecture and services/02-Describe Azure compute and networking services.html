@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Describe Azure compute and networking services</title>
+    <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+    h1 { color: #0078d4; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
+    h2 { color: #333; margin-top: 40px; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+    .section { margin-bottom: 40px; }
+    .section-header { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .section-header a { color: #0078d4; text-decoration: none; }
+    .section-header a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; }
+    pre { background: #f4f4f4; padding: 15px; overflow-x: auto; border-radius: 5px; }
+    code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+    table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #f5f5f5; }
+    .NOTE, .TIP { padding: 12px 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid; }
+    .NOTE { background-color: #e7f3ff; border-color: #0078d4; }
+    .NOTE > p:first-child { font-weight: bold; color: #0078d4; margin-top: 0; }
+    .TIP { background-color: #e8f5e9; border-color: #4caf50; }
+    .TIP > p:first-child { font-weight: bold; color: #2e7d32; margin-top: 0; }
+</style>
+</head>
+<body>
+    <h1>Describe Azure compute and networking services</h1>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>1. Introduction</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/1-introduction">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/1-introduction</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Introduction</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.introduction">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">1 minute</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>This module introduces you to the compute and networking services of Azure. You learn about three of the compute options (virtual machines, containers, and Azure functions). You also learn about some of the networking features, such as Azure virtual networks, Azure DNS, and Azure ExpressRoute.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>After completing this module, you’ll be able to:</p>
+<ul>
+<li>Compare compute types, including container instances, virtual machines, and functions.</li>
+<li>Describe virtual machine options, including virtual machines (VMs), virtual machine scale sets, virtual machine availability sets, and Azure Virtual Desktop.</li>
+<li>Describe resources required for virtual machines.</li>
+<li>Describe application hosting options, including Azure Web Apps, containers, and virtual machines.</li>
+<li>Describe virtual networking, including the purpose of Azure Virtual Networks, Azure virtual subnets, peering, Azure DNS, VPN Gateway, and ExpressRoute.</li>
+<li>Define public and private endpoints.</li>
+</ul>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>2. Describe Azure virtual machines</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/2-virtual-machines">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/2-virtual-machines</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure virtual machines</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.virtual-machines">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">6 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>With Azure Virtual Machines (VMs), you can create and use VMs in the cloud. VMs provide infrastructure as a service (IaaS) in the form of a virtualized server and can be used in many ways. Just like a physical computer, you can customize all of the software running on your VM. VMs are an ideal choice when you need:</p>
+<ul>
+<li>Total control over the operating system (OS).</li>
+<li>The ability to run custom software.</li>
+<li>To use custom hosting configurations.</li>
+</ul>
+<p>An Azure VM gives you the flexibility of virtualization without having to buy and maintain the physical hardware that runs the VM. However, as an IaaS offering, you still need to configure, update, and maintain the software that runs on the VM.</p>
+<p>You can even create or use an already created image to rapidly provision VMs. You can create and provision a VM in minutes when you select a preconfigured VM image. An image is a template used to create a VM and may already include an OS and other software, like development tools or web hosting environments.</p>
+<h2 id="scale-vms-in-azure">Scale VMs in Azure</h2>
+<p>You can run single VMs for testing, development, or minor tasks. Or you can group VMs together to provide high availability, scalability, and redundancy. Azure can also manage the grouping of VMs for you with features such as scale sets and availability sets.</p>
+<h3 id="virtual-machine-scale-sets">Virtual machine scale sets</h3>
+<p>Virtual machine scale sets let you create and manage a group of identical, load-balanced VMs. If you simply created multiple VMs with the same purpose, you’d need to ensure they were all configured identically and then set up network routing parameters to ensure efficiency. You’d also have to monitor the utilization to determine if you need to increase or decrease the number of VMs.</p>
+<p>Instead, with virtual machine scale sets, Azure automates most of that work. Scale sets allow you to centrally manage, configure, and update a large number of VMs in minutes. The number of VM instances can automatically increase or decrease in response to demand, or you can set it to scale based on a defined schedule. Virtual machine scale sets also automatically deploy a load balancer to make sure that your resources are being used efficiently. With virtual machine scale sets, you can build large-scale services for areas such as compute, big data, and container workloads.</p>
+<h3 id="virtual-machine-availability-sets">Virtual machine availability sets</h3>
+<p>Virtual machine availability sets are another tool to help you build a more resilient, highly available environment. Availability sets are designed to ensure that VMs stagger updates and have varied power and network connectivity, preventing you from losing all your VMs with a single network or power failure.</p>
+<p>Availability sets accomplish these objectives by grouping VMs in two ways: update domain and fault domain.</p>
+<ul>
+<li><strong>Update domain</strong>: The update domain groups VMs that can be rebooted at the same time. This setup allows you to apply updates while knowing that only one update domain grouping is offline at a time. All of the machines in one update domain update. An update group going through the update process is given a 30-minute time to recover before maintenance on the next update domain starts.</li>
+<li><strong>Fault domain</strong>: The fault domain groups your VMs by common power source and network switch. By default, an availability set splits your VMs across up to three fault domains. This helps protect against a physical power or networking failure by having VMs in different fault domains (thus being connected to different power and networking resources).</li>
+</ul>
+<p>Best of all, there’s no additional cost for configuring an availability set. You only pay for the VM instances you create.</p>
+<h2 id="examples-of-when-to-use-vms">Examples of when to use VMs</h2>
+<p>Some common examples or use cases for virtual machines include:</p>
+<ul>
+<li><strong>During testing and development</strong>. VMs provide a quick and easy way to create different OS and application configurations. Test and development personnel can then easily delete the VMs when they no longer need them.</li>
+<li><strong>When running applications in the cloud</strong>. The ability to run certain applications in the public cloud as opposed to creating a traditional infrastructure to run them can provide substantial economic benefits. For example, an application might need to handle fluctuations in demand. Shutting down VMs when you don't need them or quickly starting them up to meet a sudden increase in demand means you pay only for the resources you use.</li>
+<li><strong>When extending your datacenter to the cloud</strong>: An organization can extend the capabilities of its own on-premises network by creating a virtual network in Azure and adding VMs to that virtual network. Applications like SharePoint can then run on an Azure VM instead of running locally. This arrangement makes it easier or less expensive to deploy than in an on-premises environment.</li>
+<li><strong>During disaster recovery</strong>: As with running certain types of applications in the cloud and extending an on-premises network to the cloud, you can get significant cost savings by using an IaaS-based approach to disaster recovery. If a primary datacenter fails, you can create VMs running on Azure to run your critical applications and then shut them down when the primary datacenter becomes operational again.</li>
+</ul>
+<h2 id="move-to-the-cloud-with-vms">Move to the cloud with VMs</h2>
+<p>VMs are also an excellent choice when you move from a physical server to the cloud (also known as lift and shift). You can create an image of the physical server and host it within a VM with little or no changes. Just like a physical on-premises server, you must maintain the VM: you’re responsible for maintaining the installed OS and software.</p>
+<h2 id="vm-resources">VM Resources</h2>
+<p>When you provision a VM, you’ll also have the chance to pick the resources that are associated with that VM, including:</p>
+<ul>
+<li>Size (purpose, number of processor cores, and amount of RAM)</li>
+<li>Storage disks (hard disk drives, solid state drives, etc.)</li>
+<li>Networking (virtual network, public IP address, and port configuration)</li>
+</ul>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>3. Exercise - Create an Azure virtual machine</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/3-exercise-create-azure-virtual-machine">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/3-exercise-create-azure-virtual-machine</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Exercise - Create an Azure virtual machine</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.exercise-create-azure-virtual-machine">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">10 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>This exercise has been merged with the later exercise in this module, <strong>Exercise - Create an Azure Virtual Machine and Configure network access</strong>.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>4. Describe Azure virtual desktop</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/4-virtual-desktop">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/4-virtual-desktop</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure virtual desktop</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.virtual-desktop">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">5 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Another type of virtual machine is the Azure Virtual Desktop. Azure Virtual Desktop is a desktop and application virtualization service that runs on the cloud. It enables you to use a cloud-hosted version of Windows from any location. Azure Virtual Desktop works across devices and operating systems, and works with apps that you can use to access remote desktops or most modern browsers.</p>
+<p>The following video gives you an overview of Azure Virtual Desktop:</p>
+<div class="embeddedvideo"><iframe allowfullscreen="true" data-linktype="external" frameborder="0" src="https://learn-video.azurefd.net/vod/player?id=04978efb-d8e5-4352-bcb4-45399a988a69"></iframe></div>
+<h2 id="enhance-security">Enhance security</h2>
+<p>Azure Virtual Desktop provides centralized security management for users' desktops with Microsoft Entra ID. You can enable multifactor authentication to secure user sign-ins. You can also secure access to data by assigning granular role-based access controls (RBACs) to users.</p>
+<p>With Azure Virtual Desktop, the data and apps are separated from the local hardware. The actual desktop and apps are running in the cloud, meaning the risk of confidential data being left on a personal device is reduced. Additionally, user sessions are isolated in both single and multi-session environments.</p>
+<h2 id="multi-session-windows-10-or-windows-11-deployment">Multi-session Windows 10 or Windows 11 deployment</h2>
+<p>Azure Virtual Desktop lets you use Windows 10 or Windows 11 Enterprise multi-session, the only Windows client-based operating system that enables multiple concurrent users on a single VM. Azure Virtual Desktop also provides a more consistent experience with broader application support compared to Windows Server-based operating systems.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>5. Describe Azure containers</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/5-containers">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/5-containers</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure containers</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.containers">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">6 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>While virtual machines are an excellent way to reduce costs versus the investments that are necessary for physical hardware, they're still limited to a single operating system per virtual machine. If you want to run multiple instances of an application on a single host machine, containers are an excellent choice.</p>
+<h2 id="what-are-containers">What are containers?</h2>
+<p>Containers are a virtualization environment. Much like running multiple virtual machines on a single physical host, you can run multiple containers on a single physical or virtual host. Unlike virtual machines, you don't manage the operating system for a container. Virtual machines appear to be an instance of an operating system that you can connect to and manage. Containers are lightweight and designed to be created, scaled out, and stopped dynamically. It's possible to create and deploy virtual machines as application demand increases, but containers are a lighter weight, more agile method. Containers are designed to allow you to respond to changes on demand. With containers, you can quickly restart if there's a crash or hardware interruption. One of the most popular container engines is Docker, and Azure supports Docker.</p>
+<h2 id="compare-virtual-machines-to-containers">Compare virtual machines to containers</h2>
+<p>The following video highlights several of the important differences between virtual machines and containers:</p>
+<div class="embeddedvideo"><iframe allowfullscreen="true" data-linktype="external" frameborder="0" src="https://learn-video.azurefd.net/vod/player?id=7aa48d3f-4304-4a18-9861-eaf9d4bebd26"></iframe></div>
+<h3 id="azure-container-instances">Azure Container Instances</h3>
+<p>Azure Container Instances offer the fastest and simplest way to run a container in Azure; without having to manage any virtual machines or adopt any additional services. Azure Container Instances are a platform as a service (PaaS) offering. Azure Container Instances allow you to upload your containers and then the service runs the containers for you.</p>
+<h3 id="azure-container-apps">Azure Container Apps</h3>
+<p>Azure Container Apps are similar in many ways to a container instance. They allow you to get up and running right away, they remove the container management piece, and they're a PaaS offering. Container Apps have extra benefits such as the ability to incorporate load balancing and scaling. These other functions allow you to be more elastic in your design.</p>
+<h3 id="azure-kubernetes-service">Azure Kubernetes Service</h3>
+<p>Azure Kubernetes Service (AKS) is a container orchestration service. An orchestration service manages the lifecycle of containers. When you're deploying a fleet of containers, AKS can make fleet management simpler and more efficient.</p>
+<h3 id="use-containers-in-your-solutions">Use containers in your solutions</h3>
+<p>Containers are often used to create solutions by using a microservice architecture. This architecture is where you break solutions into smaller, independent pieces. For example, you might split a website into a container hosting your front end, another hosting your back end, and a third for storage. This split allows you to separate portions of your app into logical sections that can be maintained, scaled, or updated independently.</p>
+<p>Imagine your website back-end reaches capacity, but the front end and storage aren't stressed. With containers, you could scale the back-end separately to improve performance. If something necessitated such a change, you could also choose to change the storage service or modify the front end without impacting any of the other components.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>6. Describe Azure functions</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/6-functions">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/6-functions</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure functions</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.functions">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">4 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Azure Functions is an event-driven, serverless compute option that doesn’t require maintaining virtual machines or containers. If you build an app using VMs or containers, those resources have to be “running” in order for your app to function. With Azure Functions, an event wakes the function, alleviating the need to keep resources provisioned when there are no events.</p>
+<h2 id="serverless-computing-in-azure">Serverless computing in Azure</h2>
+<div class="embeddedvideo"><iframe allowfullscreen="true" data-linktype="external" frameborder="0" src="https://learn-video.azurefd.net/vod/player?id=bd90a678-3c03-4e0f-9470-f6f0626373e0"></iframe></div>
+<h2 id="benefits-of-azure-functions">Benefits of Azure Functions</h2>
+<p>Using Azure Functions is ideal when you're only concerned about the code running your service and not about the underlying platform or infrastructure. Functions are commonly used when you need to perform work in response to an event (often via a REST request), timer, or message from another Azure service, and when that work can be completed quickly, within seconds or less.</p>
+<p>Functions scale automatically based on demand, so they may be a good choice when demand is variable.</p>
+<p>Azure Functions runs your code when it triggers and automatically deallocates resources when the function is finished. In this model, Azure only charges you for the CPU time used while your function runs.</p>
+<p>Functions can be either stateless or stateful. When they're stateless (the default), they behave as if they restart every time they respond to an event. When they're stateful (called Durable Functions), a context is passed through the function to track prior activity.</p>
+<p>Functions are a key component of serverless computing. They're also a general compute platform for running any type of code. If the needs of the developer's app change, you can deploy the project in an environment that isn't serverless. This flexibility allows you to manage scaling, run on virtual networks, and even completely isolate the functions.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>7. Describe application hosting options</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/7-describe-application-hosting-options">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/7-describe-application-hosting-options</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe application hosting options</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.describe-application-hosting-options">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">3 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>If you need to host your application on Azure, you might initially turn to a virtual machine (VM) or containers. Both VMs and containers provide excellent hosting solutions. VMs give you maximum control of the hosting environment and allow you to configure it exactly how you want. VMs also may be the most familiar hosting method if you’re new to the cloud. Containers, with the ability to isolate and individually manage different aspects of the hosting solution, can also be a robust and compelling option.</p>
+<p>There are other hosting options that you can use with Azure, including Azure App Service.</p>
+<h2 id="azure-app-service">Azure App Service</h2>
+<p>App Service enables you to build and host web apps, background jobs, mobile back-ends, and RESTful APIs in the programming language of your choice without managing infrastructure. It offers automatic scaling and high availability. App Service supports Windows and Linux. It enables automated deployments from GitHub, Azure DevOps, or any Git repo to support a continuous deployment model.</p>
+<p>Azure App Service is a robust hosting option that you can use to host your apps in Azure. Azure App Service lets you focus on building and maintaining your app, and Azure focuses on keeping the environment up and running.</p>
+<p>Azure App Service is an HTTP-based service for hosting web applications, REST APIs, and mobile back ends. Azure App Service supports multiple technologies, including programming languages like Java, PHP, Python, and JavaScript (via Node.js), as well as frameworks such as .NET and .NET Core. Azure App Service supports both Windows and Linux environments.</p>
+<h3 id="types-of-app-services">Types of app services</h3>
+<p>With App Service, you can host most common app service styles like:</p>
+<ul>
+<li>Web apps</li>
+<li>API apps</li>
+<li>WebJobs</li>
+<li>Mobile apps</li>
+</ul>
+<p>App Service handles most of the infrastructure decisions you deal with in hosting web-accessible apps:</p>
+<ul>
+<li>Deployment and management are integrated into the platform.</li>
+<li>Endpoints can be secured.</li>
+<li>Sites can be scaled quickly to handle high traffic loads.</li>
+<li>The built-in load balancing and traffic manager provide high availability.</li>
+</ul>
+<p>All of these app styles are hosted in the same infrastructure and share these benefits. This flexibility makes App Service the ideal choice to host web-oriented applications.</p>
+<h3 id="web-apps">Web apps</h3>
+<p>App Service includes full support for hosting web apps by using ASP.NET, ASP.NET Core, Java, Ruby, Node.js, PHP, or Python. You can choose either Windows or Linux as the host operating system.</p>
+<h3 id="api-apps">API apps</h3>
+<p>Much like hosting a website, you can build REST-based web APIs by using your choice of language and framework. You get full Swagger support and the ability to package and publish your API in Azure Marketplace. The produced apps can be consumed from any HTTP- or HTTPS-based client.</p>
+<h3 id="webjobs">WebJobs</h3>
+<p>You can use the WebJobs feature to run a program (.exe, Java, PHP, Python, or Node.js) or script (.cmd, .bat, PowerShell, or Bash) in the same context as a web app, API app, or mobile app. They can be scheduled or run by a trigger. WebJobs are often used to run background tasks as part of your application logic.</p>
+<h3 id="mobile-apps">Mobile apps</h3>
+<p>Use the Mobile Apps feature of App Service to quickly build a back end for iOS and Android apps. With just a few actions in the Azure portal, you can:</p>
+<ul>
+<li>Store mobile app data in a cloud-based SQL database.</li>
+<li>Authenticate customers against common social providers, such as MSA, Google, X, and Facebook.</li>
+<li>Send push notifications.</li>
+<li>Execute custom back-end logic in C# or Node.js.</li>
+</ul>
+<p>On the mobile app side, there's SDK support for native iOS and Android, Xamarin, and React native apps.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>8. Describe Azure virtual networking</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/8-virtual-network">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/8-virtual-network</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure virtual networking</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.virtual-network">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">5 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Azure virtual networks and virtual subnets enable Azure resources, such as VMs, web apps, and databases, to communicate with each other, with users on the internet, and with your on-premises client computers. You can think of an Azure network as an extension of your on-premises network with resources that link other Azure resources.</p>
+<p>Azure virtual networks provide the following key networking capabilities:</p>
+<ul>
+<li>Isolation and segmentation</li>
+<li>Internet communications</li>
+<li>Communicate between Azure resources</li>
+<li>Communicate with on-premises resources</li>
+<li>Route network traffic</li>
+<li>Filter network traffic</li>
+<li>Connect virtual networks</li>
+</ul>
+<p>Azure virtual networking supports both public and private endpoints to enable communication between external or internal resources with other internal resources.</p>
+<ul>
+<li>Public endpoints have a public IP address and can be accessed from anywhere in the world.</li>
+<li>Private endpoints exist within a virtual network and have a private IP address from within the address space of that virtual network.</li>
+</ul>
+<h2 id="isolation-and-segmentation">Isolation and segmentation</h2>
+<p>Azure virtual network allows you to create multiple isolated virtual networks. When you set up a virtual network, you define a private IP address space by using either public or private IP address ranges. The IP range only exists within the virtual network and isn't internet routable. You can divide that IP address space into subnets and allocate part of the defined address space to each named subnet.</p>
+<p>For name resolution, you can use the name resolution service built into Azure. You also can configure the virtual network to use either an internal or an external DNS server.</p>
+<h2 id="internet-communications">Internet communications</h2>
+<p>You can enable incoming connections from the internet by assigning a public IP address to an Azure resource, or putting the resource behind a public load balancer.</p>
+<h2 id="communicate-between-azure-resources">Communicate between Azure resources</h2>
+<p>You want to enable Azure resources to communicate securely with each other. You can do that in one of two ways:</p>
+<ul>
+<li>Virtual networks can connect not only VMs but other Azure resources, such as the App Service Environment for Power Apps, Azure Kubernetes Service, and Azure virtual machine scale sets.</li>
+<li>Service endpoints can connect to other Azure resource types, such as Azure SQL databases and storage accounts. This approach enables you to link multiple Azure resources to virtual networks to improve security and provide optimal routing between resources.</li>
+</ul>
+<h2 id="communicate-with-on-premises-resources">Communicate with on-premises resources</h2>
+<p>Azure virtual networks enable you to link resources together in your on-premises environment and within your Azure subscription. In effect, you can create a network that spans both your local and cloud environments. There are three mechanisms for you to achieve this connectivity:</p>
+<ul>
+<li>Point-to-site virtual private network connections are from a computer outside your organization back into your corporate network. In this case, the client computer initiates an encrypted VPN connection to connect to the Azure virtual network.</li>
+<li>Site-to-site virtual private networks link your on-premises VPN device or gateway to the Azure VPN gateway in a virtual network. In effect, the devices in Azure can appear as being on the local network. The connection is encrypted and works over the internet.</li>
+<li>Azure ExpressRoute provides a dedicated private connectivity to Azure that doesn't travel over the internet. ExpressRoute is useful for environments where you need greater bandwidth and even higher levels of security.</li>
+</ul>
+<h2 id="route-network-traffic">Route network traffic</h2>
+<p>By default, Azure routes traffic between subnets on any connected virtual networks, on-premises networks, and the internet. You also can control routing and override those settings, as follows:</p>
+<ul>
+<li>Route tables allow you to define rules about how traffic should be directed. You can create custom route tables that control how packets are routed between subnets.</li>
+<li>Border Gateway Protocol (BGP) works with Azure VPN gateways, Azure Route Server, or Azure ExpressRoute to propagate on-premises BGP routes to Azure virtual networks.</li>
+</ul>
+<h2 id="filter-network-traffic">Filter network traffic</h2>
+<p>Azure virtual networks enable you to filter traffic between subnets by using the following approaches:</p>
+<ul>
+<li>Network security groups are Azure resources that can contain multiple inbound and outbound security rules. You can define these rules to allow or block traffic, based on factors such as source and destination IP address, port, and protocol.</li>
+<li>Network virtual appliances are specialized VMs that can be compared to a hardened network appliance. A network virtual appliance carries out a particular network function, such as running a firewall or performing wide area network (WAN) optimization.</li>
+</ul>
+<h2 id="connect-virtual-networks">Connect virtual networks</h2>
+<p>You can link virtual networks together by using virtual network peering. Peering allows two virtual networks to connect directly to each other. Network traffic between peered networks is private, and travels on the Microsoft backbone network, never entering the public internet. Peering enables resources in each virtual network to communicate with each other. These virtual networks can be in separate regions. This feature allows you to create a global interconnected network through Azure.</p>
+<p>User-defined routes (UDR) allow you to control the routing tables between subnets within a virtual network or between virtual networks. This allows for greater control over network traffic flow.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>9. Exercise - Create an Azure Virtual Machine and Configure network access</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/9-exercise-configure-network-access">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/9-exercise-configure-network-access</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Exercise - Create an Azure Virtual Machine and Configure network access</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.exercise-configure-network-access">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">10 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>In this exercise, you configure the access to the virtual machine (VM) you created earlier in this module.</p>
+<p>Launch the exercise and follow the instructions.</p>
+<div class="NOTE">
+<p>Note</p>
+<p>You'll need access to a Microsoft Azure subscription to complete this exercise.</p>
+</div>
+<p><a data-linktype="external" href="https://microsoftlearning.github.io/AZ-900-Microsoft-Azure-Fundamentals/Instructions/Labs/03-exercise-create-azure-virtual-machine.html"><img alt="Button to launch exercise." data-linktype="relative-path" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-compute-networking-services/media/launch-exercise-button.png"/></a></p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>10. Describe Azure virtual private networks</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/10-virtual-private-networks">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/10-virtual-private-networks</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure virtual private networks</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.virtual-private-networks">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">5 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>A virtual private network (VPN) uses an encrypted tunnel within another network. VPNs are typically deployed to connect two or more trusted private networks to one another over an untrusted network (typically the public internet). Traffic is encrypted while traveling over the untrusted network to prevent eavesdropping or other attacks. VPNs can enable networks to safely and securely share sensitive information.</p>
+<h2 id="vpn-gateways">VPN gateways</h2>
+<p>A VPN gateway is a type of virtual network gateway. Azure VPN Gateway instances are deployed in a dedicated subnet of the virtual network and enable the following connectivity:</p>
+<ul>
+<li>Connect on-premises datacenters to virtual networks through a site-to-site connection.</li>
+<li>Connect individual devices to virtual networks through a point-to-site connection.</li>
+<li>Connect virtual networks to other virtual networks through a network-to-network connection.</li>
+</ul>
+<p>All data transfer is encrypted inside a private tunnel as it crosses the internet. You can deploy only one VPN gateway in each virtual network. However, you can use one gateway to connect to multiple locations, which includes other virtual networks or on-premises datacenters.</p>
+<p>When setting up a VPN gateway, you must specify the type of VPN - either policy-based or route-based. The primary distinction between these two types is how they determine which traffic needs encryption. In Azure, regardless of the VPN type, the method of authentication employed is a preshared key.</p>
+<ul>
+<li>Policy-based VPN gateways specify statically the IP address of packets that should be encrypted through each tunnel. This type of device evaluates every data packet against those sets of IP addresses to choose the tunnel where that packet is going to be sent through.</li>
+<li>In Route-based gateways, IPSec tunnels are modeled as a network interface or virtual tunnel interface. IP routing (either static routes or dynamic routing protocols) decides which one of these tunnel interfaces to use when sending each packet. Route-based VPNs are the preferred connection method for on-premises devices. They're more resilient to topology changes such as the creation of new subnets.</li>
+</ul>
+<p>Use a route-based VPN gateway if you need any of the following types of connectivity:</p>
+<ul>
+<li>Connections between virtual networks</li>
+<li>Point-to-site connections</li>
+<li>Multisite connections</li>
+<li>Coexistence with an Azure ExpressRoute gateway</li>
+</ul>
+<h2 id="high-availability-scenarios">High-availability scenarios</h2>
+<p>If you’re configuring a VPN to keep your information safe, you also want to be sure that it’s a highly available and fault tolerant VPN configuration. There are a few ways to maximize the resiliency of your VPN gateway.</p>
+<h3 id="activestandby">Active/standby</h3>
+<p>By default, VPN gateways are deployed as two instances in an active/standby configuration, even if you only see one VPN gateway resource in Azure. When planned maintenance or unplanned disruption affects the active instance, the standby instance automatically assumes responsibility for connections without any user intervention. Connections are interrupted during this failover, but they typically restore within a few seconds for planned maintenance and within 90 seconds for unplanned disruptions.</p>
+<h3 id="activeactive">Active/active</h3>
+<p>With the introduction of support for the BGP routing protocol, you can also deploy VPN gateways in an active/active configuration. In this configuration, you assign a unique public IP address to each instance. You then create separate tunnels from the on-premises device to each IP address. You can extend the high availability by deploying an additional VPN device on-premises.</p>
+<h3 id="expressroute-failover">ExpressRoute failover</h3>
+<p>Another high-availability option is to configure a VPN gateway as a secure failover path for ExpressRoute connections. ExpressRoute circuits have resiliency built in. However, they aren't immune to physical problems that affect the cables delivering connectivity or outages that affect the complete ExpressRoute location. In high-availability scenarios, where there's risk associated with an outage of an ExpressRoute circuit, you can also provision a VPN gateway that uses the internet as an alternative method of connectivity. In this way, you can ensure there's always a connection to the virtual networks.</p>
+<h3 id="zone-redundant-gateways">Zone-redundant gateways</h3>
+<p>In regions that support availability zones, VPN gateways and ExpressRoute gateways can be deployed in a zone-redundant configuration. This configuration brings resiliency, scalability, and higher availability to virtual network gateways. Deploying gateways in Azure availability zones physically and logically separates gateways within a region while protecting your on-premises network connectivity to Azure from zone-level failures. These gateways require different gateway stock keeping units (SKUs) and use Standard public IP addresses instead of Basic public IP addresses.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>11. Describe Azure ExpressRoute</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/11-expressroute">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/11-expressroute</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure ExpressRoute</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.expressroute">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">4 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Azure ExpressRoute lets you extend your on-premises networks into the Microsoft cloud over a private connection, with the help of a connectivity provider. This connection is called an ExpressRoute Circuit. With ExpressRoute, you can establish connections to Microsoft cloud services, such as Microsoft Azure and Microsoft 365. This feature allows you to connect offices, datacenters, or other facilities to the Microsoft cloud. Each location would have its own ExpressRoute circuit.</p>
+<p>Connectivity can be from an any-to-any (IP VPN) network, a point-to-point Ethernet network, or a virtual cross-connection through a connectivity provider at a colocation facility. ExpressRoute connections don't go over the public Internet. This setup allows ExpressRoute connections to offer more reliability, faster speeds, consistent latencies, and higher security than typical connections over the Internet.</p>
+<h2 id="features-and-benefits-of-expressroute">Features and benefits of ExpressRoute</h2>
+<p>There are several benefits to using ExpressRoute as the connection service between Azure and on-premises networks.</p>
+<ul>
+<li>Connectivity to Microsoft cloud services across all regions in the geopolitical region.</li>
+<li>Global connectivity to Microsoft services across all regions with the ExpressRoute Global Reach.</li>
+<li>Dynamic routing between your network and Microsoft via Border Gateway Protocol (BGP).</li>
+<li>Built-in redundancy in every peering location for higher reliability.</li>
+</ul>
+<h3 id="connectivity-to-microsoft-cloud-services">Connectivity to Microsoft cloud services</h3>
+<p>ExpressRoute enables direct access to the following services in all regions:</p>
+<ul>
+<li>Microsoft Office 365</li>
+<li>Microsoft Dynamics 365</li>
+<li>Azure compute services, such as Azure Virtual Machines</li>
+<li>Azure cloud services, such as Azure Cosmos DB and Azure Storage</li>
+</ul>
+<h3 id="global-connectivity">Global connectivity</h3>
+<p>You can enable ExpressRoute Global Reach to exchange data across your on-premises sites by connecting your ExpressRoute circuits. For example, say you had an office in Asia and a datacenter in Europe, both with ExpressRoute circuits connecting them to the Microsoft network. You could use ExpressRoute Global Reach to connect those two facilities, allowing them to communicate without transferring data over the public internet.</p>
+<h3 id="dynamic-routing">Dynamic routing</h3>
+<p>ExpressRoute uses the BGP. BGP is used to exchange routes between on-premises networks and resources running in Azure. This protocol enables dynamic routing between your on-premises network and services running in the Microsoft cloud.</p>
+<h3 id="built-in-redundancy">Built-in redundancy</h3>
+<p>Each connectivity provider uses redundant devices to ensure that connections established with Microsoft are highly available. You can configure multiple circuits to complement this feature.</p>
+<h2 id="expressroute-connectivity-models">ExpressRoute connectivity models</h2>
+<p>ExpressRoute supports four models that you can use to connect your on-premises network to the Microsoft cloud:</p>
+<ul>
+<li>CloudExchange colocation</li>
+<li>Point-to-point Ethernet connection</li>
+<li>Any-to-any connection</li>
+<li>Directly from ExpressRoute sites</li>
+</ul>
+<h3 id="colocation-at-a-cloud-exchange">Colocation at a cloud exchange</h3>
+<p>Colocation refers to your datacenter, office, or other facility being physically colocated at a cloud exchange, such as an ISP. If your facility is colocated at a cloud exchange, you can request a virtual cross-connect to the Microsoft cloud.</p>
+<h3 id="point-to-point-ethernet-connection">Point-to-point Ethernet connection</h3>
+<p>Point-to-point ethernet connection refers to using a point-to-point connection to connect your facility to the Microsoft cloud.</p>
+<h3 id="any-to-any-networks">Any-to-any networks</h3>
+<p>With any-to-any connectivity, you can integrate your wide area network (WAN) with Azure by providing connections to your offices and datacenters. Azure integrates with your WAN connection to provide a connection like you would have between your datacenter and any branch offices.</p>
+<h3 id="directly-from-expressroute-sites">Directly from ExpressRoute sites</h3>
+<p>You can connect directly into the Microsoft's global network at a peering location strategically distributed across the world. ExpressRoute Direct provides dual 100 Gbps or 10-Gbps connectivity, which supports Active/Active connectivity at scale.</p>
+<h2 id="security-considerations">Security considerations</h2>
+<p>With ExpressRoute, your data doesn't travel over the public internet, reducing the risks associated with internet communications. ExpressRoute is a private connection from your on-premises infrastructure to your Azure infrastructure. Even if you have an ExpressRoute connection, DNS queries, certificate revocation list checking, and Azure Content Delivery Network requests are still sent over the public internet.</p>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>12. Describe Azure DNS</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/12-domain-name-system">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/12-domain-name-system</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Describe Azure DNS</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.domain-name-system">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">3 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>Azure DNS is a hosting service for DNS domains that provides name resolution by using Microsoft Azure infrastructure. By hosting your domains in Azure, you can manage your DNS records using the same credentials, APIs, tools, and billing as your other Azure services.</p>
+<h2 id="benefits-of-azure-dns">Benefits of Azure DNS</h2>
+<p>Azure DNS uses the scope and scale of Microsoft Azure to provide numerous benefits, including:</p>
+<ul>
+<li>Reliability and performance</li>
+<li>Security</li>
+<li>Ease of Use</li>
+<li>Customizable virtual networks</li>
+<li>Alias records</li>
+</ul>
+<h3 id="reliability-and-performance">Reliability and performance</h3>
+<p>DNS domains in Azure DNS are hosted on Azure's global network of DNS name servers, providing resiliency and high availability. Azure DNS uses anycast networking, so the closest available DNS server answers each DNS query, providing fast performance and high availability for your domain.</p>
+<h3 id="security">Security</h3>
+<p>Azure DNS is based on Azure Resource Manager, which provides features such as:</p>
+<ul>
+<li>Azure role-based access control (Azure RBAC) to control who has access to specific actions for your organization.</li>
+<li>Activity logs to monitor how a user in your organization modified a resource or to find an error when troubleshooting.</li>
+<li>Resource locking to lock a subscription, resource group, or resource. Locking prevents other users in your organization from accidentally deleting or modifying critical resources.</li>
+</ul>
+<h3 id="ease-of-use">Ease of use</h3>
+<p>Azure DNS can manage DNS records for your Azure services and provide DNS for your external resources as well. Azure DNS is integrated in the Azure portal and uses the same credentials, support contract, and billing as your other Azure services.</p>
+<p>Because Azure DNS is running on Azure, it means you can manage your domains and records with the Azure portal, Azure PowerShell cmdlets, and the cross-platform Azure CLI. Applications that require automated DNS management can integrate with the service by using the REST API and SDKs.</p>
+<h3 id="customizable-virtual-networks-with-private-domains">Customizable virtual networks with private domains</h3>
+<p>Azure DNS also supports private DNS domains. This feature allows you to use your own custom domain names in your private virtual networks, rather than being stuck with the Azure-provided names.</p>
+<h3 id="alias-records">Alias records</h3>
+<p>Azure DNS also supports alias record sets. You can use an alias record set to refer to an Azure resource, such as an Azure public IP address, an Azure Traffic Manager profile, or an Azure Content Delivery Network (CDN) endpoint. If the IP address of the underlying resource changes, the alias record set seamlessly updates itself during DNS resolution. The alias record set points to the service instance, and the service instance is associated with an IP address.</p>
+<div class="IMPORTANT">
+<p>Important</p>
+<p>You can't use Azure DNS to buy a domain name. For an annual fee, you can buy a domain name by using App Service domains or a third-party domain name registrar. Once purchased, your domains can be hosted in Azure DNS for record management.</p>
+</div>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>13. Module assessment</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/13-knowledge-check">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/13-knowledge-check</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Module assessment</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.knowledge-check">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">4 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div aria-hidden="true" hidden="" id="module-unit-content">
+<p>Choose the best response for each question.</p>
+</div>
+<h2 aria-hidden="true" hidden="" id="quiz-title">Check your knowledge</h2>
+<form aria-hidden="true" aria-label="Knowledge check" class="quiz-form margin-top-xs" data-bi-name="quiz" hidden="" id="question-container" role="form">
+<fieldset class="field">
+<div role="list">
+<div class="quiz-question" data-bi-name="question" role="listitem">
+<div aria-labelledby="quiz-question-1" class="quiz-question-title font-size-md margin-top-sm margin-bottom-xs" role="radiogroup">
+<div class="margin-top-sm margin-bottom-xs field-label" id="quiz-question-1">
+<span class="font-weight-semibold">1.</span>
+<p>Which Azure Virtual Machine feature staggers updates across VMs based on their update domain and fault domain?</p>
+<span class="required-indicator"></span>
+</div>
+<div class="field-body">
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-0-0">
+<input class="radio-dot choice-input" id="quiz-choice-0-0" name="0" type="radio" value="0"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Availability sets</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-0-1">
+<input class="radio-dot choice-input" id="quiz-choice-0-1" name="0" type="radio" value="1"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Scale sets</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-0-2">
+<input class="radio-dot choice-input" id="quiz-choice-0-2" name="0" type="radio" value="2"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Update sets</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+</div>
+</div>
+</div>
+<div class="quiz-question" data-bi-name="question" role="listitem">
+<div aria-labelledby="quiz-question-2" class="quiz-question-title font-size-md margin-top-sm margin-bottom-xs" role="radiogroup">
+<div class="margin-top-sm margin-bottom-xs field-label" id="quiz-question-2">
+<span class="font-weight-semibold">2.</span>
+<p>Which Azure service allows users to use a cloud hosted version of Windows from any location and connect from most modern browsers?</p>
+<span class="required-indicator"></span>
+</div>
+<div class="field-body">
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-1-0">
+<input class="radio-dot choice-input" id="quiz-choice-1-0" name="1" type="radio" value="0"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Azure Virtual Desktop</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-1-1">
+<input class="radio-dot choice-input" id="quiz-choice-1-1" name="1" type="radio" value="1"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Azure Virtual Machines</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-1-2">
+<input class="radio-dot choice-input" id="quiz-choice-1-2" name="1" type="radio" value="2"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Azure Container Instances</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+</div>
+</div>
+</div>
+<div class="quiz-question" data-bi-name="question" role="listitem">
+<div aria-labelledby="quiz-question-3" class="quiz-question-title font-size-md margin-top-sm margin-bottom-xs" role="radiogroup">
+<div class="margin-top-sm margin-bottom-xs field-label" id="quiz-question-3">
+<span class="font-weight-semibold">3.</span>
+<p>If you need connections between virtual networks, point-to-site connections, multisite connections, or coexistence with an Azure ExpressRoute gateway, which type of VPN gateway should you use?</p>
+<span class="required-indicator"></span>
+</div>
+<div class="field-body">
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-2-0">
+<input class="radio-dot choice-input" id="quiz-choice-2-0" name="2" type="radio" value="0"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Policy-based VPN gateway</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-2-1">
+<input class="radio-dot choice-input" id="quiz-choice-2-1" name="2" type="radio" value="1"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Point-based VPN gateway</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+<label class="quiz-choice display-flex padding-block-xxs padding-inline-xs margin-bottom-xxs radio" for="quiz-choice-2-2">
+<input class="radio-dot choice-input" id="quiz-choice-2-2" name="2" type="radio" value="2"/>
+<div class="margin-inline-sm radio-label-text">
+<p>Route-based VPN gateway</p>
+</div>
+<div ariahidden="true" class="font-weight-semibold position-absolute right-0 margin-right-md answer-result-indicator" hidden="">
+<span class="icon"></span>
+<span class="answer-result-text"></span>
+</div>
+</label>
+<div class="quiz-choice-explanation margin-block-xxs font-weight-semibold margin-left-lg">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="has-loading-skeleton" id="module-unit-quiz-submit-container"></div>
+<p class="font-size-sm color-danger font-weight-semibold margin-top-xxs is-hidden" id="unanswered-question-error" role="alert">You must answer all questions before checking your work.</p>
+<p class="visually-hidden" id="screen-reader-text"></p>
+</fieldset>
+</form>
+<form aria-hidden="true" aria-label="Knowledge check" class="margin-top-xs" data-bi-name="module-assessment" hidden="" id="module-assessment-questions-form" role="form">
+<fieldset class="field">
+<div id="module-assessment-questions-container" role="list"></div>
+<div aria-hidden="true" hidden="" id="module-assessment-objectives-container" role="list"></div>
+<div id="module-assessment-submit-container"></div>
+<p class="font-size-sm color-danger font-weight-semibold margin-top-xxs is-hidden" id="unanswered-module-assessment-question-error" role="alert">You must answer all questions before checking your work.</p>
+</fieldset>
+</form>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>14. Summary</h2>
+            <a href="https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/14-summary">https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/14-summary</a>
+        </div>
+        <div class="content"><main class="layout-body-main has-body-background-dark" data-bi-name="content" dir="ltr" id="main" lang="en-us" role="main">
+<div data-main-column="">
+<!-- Article header -->
+
+<!-- Unit navigation menu -->
+
+<!-- Main content area -->
+<div class="content"><div class="modular-content-container has-body-background box">
+<div class="section is-uniform position-relative" id="unit-inner-section">
+<h1 class="margin-right-xxl-desktop" id="module-unit-title">Summary</h1>
+<div class="xp-tag position-absolute top-0 right-0 margin-top-xs margin-top-sm-tablet margin-top-lg-desktop margin-top-xs-interactive margin-right-sm margin-right-lg-tablet margin-right-sm-interactive" data-progress-uid="learn.wwl.describe-azure-compute-networking-services.summary">
+<div class="xp-tag-hexagon">
+<span class="xp-tag-icon is-shown-complete docon docon-check">
+<span class="visually-hidden">Completed</span>
+</span>
+<span class="xp-tag-xp"></span>
+</div>
+</div>
+<ul class="metadata page-metadata" id="module-unit-metadata">
+<li id="module-unit-total-time">2 minutes</li>
+</ul>
+<div aria-hidden="true" hidden="" id="module-unit-module-assessment-message-container"></div>
+<div hidden="" id="module-unit-notification-container"></div>
+<div id="module-unit-content">
+<p>In this module, you learned about some of the compute and networking services that are part of Azure. You learned about virtual machines, and the different options associated with them (such as virtual machine scale sets and virtual machine availability sets). You were also introduced to some of the networking capabilities, including virtual networking, ExpressRoute, and virtual private networks.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>You should now be able to:</p>
+<ul>
+<li>Compare compute types, including container instances, virtual machines, and functions.</li>
+<li>Describe virtual machine options, including virtual machines (VMs), virtual machine scale sets, virtual machine availability sets, and Azure Virtual Desktop.</li>
+<li>Describe resources required for virtual machines.</li>
+<li>Describe application hosting options, including Azure Web Apps, containers, and virtual machines.</li>
+<li>Describe virtual networking, including the purpose of Azure Virtual Networks, Azure virtual subnets, peering, Azure DNS, VPN Gateway, and ExpressRoute.</li>
+<li>Define public and private endpoints.</li>
+</ul>
+<h2 id="additional-resources">Additional resources</h2>
+<p>The following additional resources are intended to provide more information on topics in this module or on additional topics related to this module.</p>
+<ul>
+<li><a data-linktype="absolute-path" href="/en-us/learn/modules/host-a-web-app-with-azure-app-service/">Host a web application with Azure App Service</a> is a Microsoft Learn module that explores the process of hosting a web application in Azure.</li>
+<li><a data-linktype="absolute-path" href="/en-us/learn/paths/intro-to-azure-network-foundation-services/">Introduction to Azure network foundation services</a> is a Microsoft Learn course that provides greater insight and information on networking with Azure.</li>
+</ul>
+</div>
+<div class="modular-content-container" hidden="" id="next-section">
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback area -->
+<div class="modular-content-container margin-block-xs">
+<section class="feedback-section section is-full-height is-uniform padding-block-none position-relative">
+<div class="font-weight-semibold display-none" id="ms--unit-support-message"></div>
+<div id="ms--unit-user-feedback">
+<!-- feedback section -->
+
+<!-- end feedback section -->
+</div>
+</section>
+</div>
+<!-- Interactive footer area -->
+</div>
+</main></div>
+    </div>
+</body>
+</html>
