@@ -87,14 +87,16 @@ Enter the Microsoft Learn course URL (press Enter to use default: https://learn.
 
 ```
 output/
-├── 01-prepare-for-azure-ai-engineing/
-│   ├── 01-introduction-to-azure-ai-studio.html
-│   ├── 01-introduction-to-azure-ai-studio.pdf
-│   ├── 02-understand-generative-ai.html
-│   └── 02-understand-generative-ai.pdf
-├── 02-computer-vision/
-│   ├── 01-analyze-images.html
-│   ├── 01-analyze-images.pdf
+├── course-title/
+│   ├── 01-learning-path-name/
+│   │   ├── 01-module-name.html
+│   │   ├── 01-module-name.pdf
+│   │   ├── 02-module-name.html
+│   │   └── 02-module-name.pdf
+│   ├── 02-learning-path-name/
+│   │   ├── 01-module-name.html
+│   │   ├── 01-module-name.pdf
+│   │   └── ...
 │   └── ...
 └── ...
 ```
