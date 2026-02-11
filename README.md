@@ -56,7 +56,13 @@ Azure Training Extract is a Python tool that pulls content from Microsoft Learn 
 pip install -r requirements.txt
 ```
 
-3. Install Playwright browsers (required for PDF generation):
+3. If you're in a venv, install the dependencies for playwright:
+
+```bash
+sudo venv/bin/playwright install-deps
+```
+
+4. Install Playwright browsers (required for PDF generation):
 
 ```bash
 playwright install chromium
@@ -170,4 +176,5 @@ OUTPUT_BASE_DIR = "output"
 ## License
 
 MIT License
+
 
