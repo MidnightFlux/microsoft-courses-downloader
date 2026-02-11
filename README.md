@@ -47,22 +47,73 @@ Azure Training Extract is a Python tool that pulls content from Microsoft Learn 
 
 ---
 
+## Prerequisites
+
+- **Python 3.8 or higher** - [Download Python](https://www.python.org/downloads/)
+
+---
+
 ## Installation
 
-1. Clone or download this repository
-2. Install Python dependencies:
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/microsoft-courses-downloader.git
+cd microsoft-courses-downloader
+```
+
+### 2. Set Up Virtual Environment (Recommended)
+
+Creating a virtual environment keeps dependencies isolated from your system Python.
+
+#### Windows (PowerShell)
+
+```powershell
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+.venv\Scripts\Activate.ps1
+```
+
+> **Note**: If you get an execution policy error, run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+
+#### Windows (Command Prompt)
+
+```cmd
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+.venv\Scripts\activate.bat
+```
+
+#### macOS / Linux
+
+```bash
+# Create virtual environment
+python3 -m venv .venv
+
+# Activate virtual environment
+source .venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+With the virtual environment activated (you should see `(.venv)` in your prompt):
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. If you're in a venv, install the dependencies for playwright:
+### 4. Install Playwright Browsers
 
-```bash
-sudo venv/bin/playwright install-deps
-```
+Playwright requires browser binaries for PDF generation:
 
-4. Install Playwright browsers (required for PDF generation):
+> **Linux users**: Run this command first to install system dependencies:
+> ```bash
+> playwright install-deps
+> ```
 
 ```bash
 playwright install chromium
@@ -72,20 +123,31 @@ playwright install chromium
 
 ## Usage
 
-Run the script:
+### Running the Script
 
-```bash
-python main.py
-```
+1. **Activate your virtual environment** (if not already active):
+   - **Windows**: `.venv\Scripts\Activate.ps1` (or `activate.bat`)
+   - **macOS/Linux**: `source .venv/bin/activate`
 
-You'll be prompted to enter a Microsoft Learn course URL. Press Enter to use the default course (AI-102T00 - Designing and Implementing a Microsoft Azure AI Solution).
+2. **Run the script**:
 
-```
-Enter the Microsoft Learn course URL (press Enter to use default: https://learn.microsoft.com/en-us/training/courses/ai-102t00):
-> 
-```
+   ```bash
+   python main.py
+   ```
 
-> **Finding Course URLs**: You can browse all available Microsoft Learn courses at [https://learn.microsoft.com/en-us/training/browse/?resource_type=course](https://learn.microsoft.com/en-us/training/browse/?resource_type=course)
+3. **Enter a course URL** when prompted, or press Enter to use the default (AI-102T00):
+
+   ```
+   Enter the Microsoft Learn course URL (press Enter to use default: https://learn.microsoft.com/en-us/training/courses/ai-102t00):
+   > 
+   ```
+
+### Finding Course URLs
+
+Browse all available Microsoft Learn courses at:  
+**https://learn.microsoft.com/en-us/training/browse/?resource_type=course**
+
+Copy any course URL and paste it when prompted.
 
 ---
 
