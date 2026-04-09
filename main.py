@@ -1,6 +1,9 @@
 """
 Script to extract learning path links from a Microsoft Learn course page.
 Uses the Microsoft Learn Catalog API.
+
+This version shortens directory and file names so it behaves better on Windows
+systems that still hit MAX_PATH limitations.
 """
 
 import os
@@ -23,6 +26,11 @@ CATALOG_API_URL = "https://learn.microsoft.com/api/catalog/"
 OUTPUT_BASE_DIR = "output"
 REQUEST_TIMEOUT = 30
 CATALOG_TIMEOUT = 60
+
+MAX_COURSE_DIR_LENGTH = 32
+MAX_LEARNING_PATH_DIR_LENGTH = 48
+MAX_MODULE_FILE_STEM_LENGTH = 64
+MAX_FULL_PATH_LENGTH = 235
 
 DEFAULT_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.0"
@@ -49,6 +57,36 @@ HTML_STYLES = """
     .TIP > p:first-child { font-weight: bold; color: #2e7d32; margin-top: 0; }
 """
 
+COMMON_PHRASE_REPLACEMENTS = {
+    "microsoft dynamics 365 customer service": "",
+    "dynamics 365 customer service": "",
+    "microsoft dynamics 365": "",
+    "microsoft learn": "",
+    "microsoft": "",
+    "customer service": "",
+    "service-level": "service level",
+    "service level": "sla",
+    "agreements": "agreements",
+}
+
+STOPWORDS = {
+    "a",
+    "an",
+    "and",
+    "by",
+    "for",
+    "from",
+    "in",
+    "into",
+    "of",
+    "on",
+    "or",
+    "the",
+    "to",
+    "using",
+    "with",
+}
+
 
 # =============================================================================
 # Data Classes
@@ -62,6 +100,91 @@ class PageContent:
     title: str
     content: str
     url: str
+
+
+# =============================================================================
+# Path Helpers
+# =============================================================================
+
+
+class PathHelper:
+    """Helpers for creating short, Windows-friendly path names."""
+
+    @staticmethod
+    def sanitize_component(name: str) -> str:
+        """Sanitize a path component for Windows filesystems."""
+        name = re.sub(r'[<>:"/\\|?*]', "-", name)
+        name = re.sub(r"\s+", " ", name).strip(" .")
+        return name or "untitled"
+
+    @staticmethod
+    def slugify(text: str) -> str:
+        """Convert a string into a compact path-friendly slug."""
+        text = text.lower().strip()
+
+        for source, target in COMMON_PHRASE_REPLACEMENTS.items():
+            text = text.replace(source, target)
+
+        text = text.replace("&", " and ")
+        text = re.sub(r"[^a-z0-9]+", " ", text)
+        words = [word for word in text.split() if word and word not in STOPWORDS]
+        slug = "-".join(words)
+        slug = re.sub(r"-+", "-", slug).strip("-")
+        return slug
+
+    @staticmethod
+    def shorten_title(
+        title: str,
+        fallback: str,
+        max_length: int,
+        prefix: str = "",
+    ) -> str:
+        """Create a short filename/directory component from a title."""
+        slug = PathHelper.slugify(title)
+        fallback_slug = PathHelper.slugify(fallback)
+
+        base = slug or fallback_slug or "untitled"
+        if len(base) > max_length:
+            base = base[:max_length].rstrip("-_")
+
+        if prefix:
+            prefix = PathHelper.sanitize_component(prefix)
+            available = max_length - len(prefix)
+            if available <= 0:
+                return prefix[:max_length]
+            base = base[:available].rstrip("-_") or "item"
+            return f"{prefix}{base}"
+
+        return PathHelper.sanitize_component(base[:max_length])
+
+    @staticmethod
+    def course_dir_name(course_url: str, course_title: str) -> str:
+        """Prefer the short course code from the URL for the course directory."""
+        course_id = course_url.rstrip("/").split("/")[-1].lower()
+        course_id = PathHelper.sanitize_component(course_id)
+
+        if course_id:
+            return course_id[:MAX_COURSE_DIR_LENGTH]
+
+        return PathHelper.shorten_title(
+            course_title,
+            fallback=course_title,
+            max_length=MAX_COURSE_DIR_LENGTH,
+        )
+
+    @staticmethod
+    def ensure_path_length(path: str, max_length: int = MAX_FULL_PATH_LENGTH) -> str:
+        """Trim the file name if the full path would become too long."""
+        normalized_path = os.path.normpath(path)
+        if len(normalized_path) <= max_length:
+            return path
+
+        directory, filename = os.path.split(path)
+        stem, extension = os.path.splitext(filename)
+        overflow = len(normalized_path) - max_length
+        shortened_stem_length = max(8, len(stem) - overflow)
+        shortened_stem = stem[:shortened_stem_length].rstrip("-_. ") or "file"
+        return os.path.join(directory, f"{shortened_stem}{extension}")
 
 
 # =============================================================================
@@ -283,11 +406,9 @@ class ContentService:
     @staticmethod
     def _clean_navigation_elements(content_div) -> None:
         """Remove navigation and UI elements from content."""
-        # Remove navigation elements
         for nav in content_div.find_all(["nav", "aside", "footer"]):
             nav.decompose()
 
-        # Remove specific elements by class
         selectors_to_remove = [
             ".font-size-sm.margin-top-md.display-none-print",
             ".button.button-clear.button-primary.button-sm.inner-focus",
@@ -296,7 +417,6 @@ class ContentService:
             for elem in content_div.select(selector):
                 elem.decompose()
 
-        # Remove elements with background-color-body class
         for elem in content_div.find_all(
             class_=lambda x: x and "background-color-body" in x
         ):
@@ -352,10 +472,18 @@ class HtmlGenerator:
     ) -> str:
         """Generate a combined HTML file with all unit contents."""
         module_data = self.content_service.fetch_page(module_url)
-        safe_title = self._sanitize_filename(module_data.title)
+        module_slug_fallback = module_url.rstrip("/").split("/")[-1]
+        file_stem = PathHelper.shorten_title(
+            module_data.title,
+            fallback=module_slug_fallback,
+            max_length=MAX_MODULE_FILE_STEM_LENGTH,
+            prefix=f"{numbered_prefix}-",
+        )
 
-        html_filename = f"{numbered_prefix}-{safe_title}.html"
-        output_file = os.path.join(output_dir, html_filename)
+        html_filename = f"{file_stem}.html"
+        output_file = PathHelper.ensure_path_length(
+            os.path.join(output_dir, html_filename)
+        )
 
         html_content = self._build_html(module_data, unit_links)
 
@@ -402,16 +530,6 @@ class HtmlGenerator:
 </body>
 </html>"""
 
-    @staticmethod
-    def _sanitize_filename(name: str) -> str:
-        """Sanitize a string to be a valid filename."""
-        # Replace invalid characters with underscore
-        name = re.sub(r'[<>:"/\\|?*]', "_", name)
-        # Remove leading/trailing spaces and dots
-        name = name.strip(" .")
-        # Limit length
-        return name[:100]
-
 
 # =============================================================================
 # PDF Generator
@@ -450,7 +568,7 @@ class PdfGenerator:
 
     def generate(self, html_file: str) -> Optional[str]:
         """Generate PDF from HTML file, handling errors gracefully."""
-        pdf_file = html_file.replace(".html", ".pdf")
+        pdf_file = PathHelper.ensure_path_length(html_file.replace(".html", ".pdf"))
         try:
             asyncio.run(self.convert_html_to_pdf(html_file, pdf_file))
             return pdf_file
@@ -486,9 +604,8 @@ class CourseProcessor:
         print(f"\nFetching learning paths from: {course_url}")
         print("=" * 80)
 
-        # Fetch course title to use as directory name
         course_title = self._fetch_course_title(course_url)
-        course_dir_name = self._sanitize_dir_name(course_title)
+        course_dir_name = PathHelper.course_dir_name(course_url, course_title)
         course_output_dir = os.path.join(output_base, course_dir_name)
 
         catalog = self.catalog_service.fetch()
@@ -506,6 +623,7 @@ class CourseProcessor:
 
         os.makedirs(course_output_dir, exist_ok=True)
         print(f"\n  Course: {course_title}")
+        print(f"  Course directory: {course_dir_name}")
         print(f"  Output directory: {course_output_dir}/")
 
         for i, path in enumerate(paths, 1):
@@ -523,7 +641,6 @@ class CourseProcessor:
             return page_content.title
         except Exception as e:
             print(f"Warning: Could not fetch course title: {e}")
-            # Fallback to extracting from URL
             return course_url.rstrip("/").split("/")[-1]
 
     def _display_learning_paths(self, paths: list[str]) -> None:
@@ -541,12 +658,18 @@ class CourseProcessor:
         print(f"\nFetching learning path page: {path_url}")
 
         path_data = self.content_service.fetch_page(path_url)
-        path_name = self._sanitize_dir_name(path_data.title)
-        numbered_name = f"{index:02d}-{path_name}"
+        path_slug_fallback = path_url.rstrip("/").split("/")[-1]
+        numbered_name = PathHelper.shorten_title(
+            path_data.title,
+            fallback=path_slug_fallback,
+            max_length=MAX_LEARNING_PATH_DIR_LENGTH,
+            prefix=f"{index:02d}-",
+        )
         path_dir = os.path.join(output_base, numbered_name)
 
         os.makedirs(path_dir, exist_ok=True)
         print(f"\nLearning Path: {path_data.title}")
+        print(f"  Directory: {numbered_name}")
         print(f"  Created: {path_dir}/")
 
         modules = self.catalog_service.get_learning_path_modules(path_url)
@@ -555,18 +678,18 @@ class CourseProcessor:
             for j, module_url in enumerate(modules, 1):
                 self._process_module(module_url, j, path_dir)
         else:
-            print(f"    (No modules found for this learning path)")
+            print("    (No modules found for this learning path)")
 
     def _process_module(self, module_url: str, index: int, path_dir: str) -> None:
         """Process a single module."""
         module_name = module_url.rstrip("/").split("/")[-1]
         print(f"\n    Module: {module_name}")
 
-        print(f"      Fetching units...")
+        print("      Fetching units...")
         unit_links = self.content_service.fetch_unit_links(module_url)
 
         if not unit_links:
-            print(f"      No units found for this module")
+            print("      No units found for this module")
             return
 
         print(f"      Found {len(unit_links)} unit(s)")
@@ -580,16 +703,6 @@ class CourseProcessor:
         pdf_file = self.pdf_generator.generate(html_file)
         if pdf_file:
             print(f"      Generated: {pdf_file}")
-
-    @staticmethod
-    def _sanitize_dir_name(name: str) -> str:
-        """Sanitize a string to be a valid directory name."""
-        # Replace invalid characters with underscore
-        name = re.sub(r'[<>:"/\\|?*]', "_", name)
-        # Remove leading/trailing spaces and dots
-        name = name.strip(" .")
-        # Limit length
-        return name[:100]
 
 
 # =============================================================================
