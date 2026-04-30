@@ -4,13 +4,35 @@ Uses the Microsoft Learn Catalog API.
 
 This version shortens directory and file names so it behaves better on Windows
 systems that still hit MAX_PATH limitations.
+
+Output behavior:
+- The script asks for the Microsoft Learn course URL.
+- The script asks for the output base directory.
+- The script asks which output format is desired (HTML, PDF, or both).
+- The course directory is created directly inside the selected output directory.
+- An index.html is generated in the course root directory.
+
+Example:
+If this script is run from:
+    C:\\Temp\\mcd
+
+Course URL:
+    https://learn.microsoft.com/en-us/training/courses/az-140t00
+
+Output directory:
+    Press Enter for default
+
+Then files are written to:
+    C:\\Temp\\mcd\\az-140t00\\
 """
 
+import html
 import os
 import re
 import requests
 import asyncio
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Optional
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
@@ -21,9 +43,14 @@ from playwright.async_api import async_playwright
 # Constants
 # =============================================================================
 
-DEFAULT_COURSE_URL = "https://learn.microsoft.com/en-us/training/courses/ai-102t00"
 CATALOG_API_URL = "https://learn.microsoft.com/api/catalog/"
-OUTPUT_BASE_DIR = "output"
+LEARN_BASE_URL = "https://learn.microsoft.com"
+LEARN_COURSE_PATH_PREFIX = "/training/courses/"
+
+# Default output base directory.
+# "." means: current working directory.
+DEFAULT_OUTPUT_BASE_DIR = "."
+
 REQUEST_TIMEOUT = 30
 CATALOG_TIMEOUT = 60
 
@@ -35,6 +62,11 @@ MAX_FULL_PATH_LENGTH = 235
 DEFAULT_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.0"
 }
+
+# Valid output format choices.
+OUTPUT_FORMAT_HTML = "html"
+OUTPUT_FORMAT_PDF = "pdf"
+OUTPUT_FORMAT_BOTH = "both"
 
 HTML_STYLES = """
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
@@ -57,34 +89,42 @@ HTML_STYLES = """
     .TIP > p:first-child { font-weight: bold; color: #2e7d32; margin-top: 0; }
 """
 
+INDEX_STYLES = """
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 960px; margin: 0 auto; padding: 30px 20px; line-height: 1.6; background: #fafafa; }
+    h1 { color: #0078d4; border-bottom: 3px solid #0078d4; padding-bottom: 12px; margin-bottom: 8px; }
+    .course-url { color: #555; font-size: 0.9em; margin-bottom: 30px; }
+    .course-url a { color: #0078d4; text-decoration: none; }
+    .course-url a:hover { text-decoration: underline; }
+    .lp-block { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 24px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+    .lp-header { background: #0078d4; color: #fff; padding: 12px 18px; display: flex; align-items: center; gap: 10px; }
+    .lp-header .lp-num { background: rgba(255,255,255,.25); border-radius: 4px; padding: 1px 8px; font-size: 0.85em; font-weight: bold; }
+    .lp-header a { color: #fff; text-decoration: none; font-weight: 600; }
+    .lp-header a:hover { text-decoration: underline; }
+    .module-list { list-style: none; margin: 0; padding: 0; }
+    .module-list li { border-bottom: 1px solid #f0f0f0; padding: 10px 18px; display: flex; align-items: center; gap: 12px; }
+    .module-list li:last-child { border-bottom: none; }
+    .module-num { color: #888; font-size: 0.82em; font-weight: bold; min-width: 48px; }
+    .module-title { flex: 1; font-weight: 500; }
+    .file-links { display: flex; gap: 8px; }
+    .file-links a { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 0.82em; text-decoration: none; font-weight: 600; }
+    .link-html { background: #e7f3ff; color: #0078d4; border: 1px solid #b3d4f7; }
+    .link-html:hover { background: #cce4ff; }
+    .link-pdf  { background: #fdecea; color: #c62828; border: 1px solid #f5bcb8; }
+    .link-pdf:hover  { background: #fbc8c5; }
+    .footer { margin-top: 30px; font-size: 0.8em; color: #aaa; text-align: center; }
+"""
+
+# Generic phrase replacements for slug generation.
+# Keep this list minimal and course-agnostic.
+# Do NOT add product- or course-specific terms here.
 COMMON_PHRASE_REPLACEMENTS = {
-    "microsoft dynamics 365 customer service": "",
-    "dynamics 365 customer service": "",
-    "microsoft dynamics 365": "",
     "microsoft learn": "",
     "microsoft": "",
-    "customer service": "",
-    "service-level": "service level",
-    "service level": "sla",
-    "agreements": "agreements",
 }
 
 STOPWORDS = {
-    "a",
-    "an",
-    "and",
-    "by",
-    "for",
-    "from",
-    "in",
-    "into",
-    "of",
-    "on",
-    "or",
-    "the",
-    "to",
-    "using",
-    "with",
+    "a", "an", "and", "by", "for", "from", "in", "into",
+    "of", "on", "or", "the", "to", "using", "with",
 }
 
 
@@ -96,10 +136,30 @@ STOPWORDS = {
 @dataclass
 class PageContent:
     """Represents extracted content from a web page."""
-
     title: str
     content: str
     url: str
+
+
+@dataclass
+class ModuleIndexEntry:
+    """Holds index information for one processed module."""
+    lp_index: int
+    module_index: int
+    module_title: str
+    module_url: str
+    html_file: Optional[str]   # Absolute path, or None if not kept
+    pdf_file: Optional[str]    # Absolute path, or None if not generated
+
+
+@dataclass
+class LearningPathIndexEntry:
+    """Holds index information for one learning path."""
+    lp_index: int
+    lp_title: str
+    lp_url: str
+    lp_dir: str                # Absolute path to LP directory
+    modules: list[ModuleIndexEntry] = field(default_factory=list)
 
 
 # =============================================================================
@@ -121,16 +181,13 @@ class PathHelper:
     def slugify(text: str) -> str:
         """Convert a string into a compact path-friendly slug."""
         text = text.lower().strip()
-
         for source, target in COMMON_PHRASE_REPLACEMENTS.items():
             text = text.replace(source, target)
-
         text = text.replace("&", " and ")
         text = re.sub(r"[^a-z0-9]+", " ", text)
-        words = [word for word in text.split() if word and word not in STOPWORDS]
+        words = [w for w in text.split() if w and w not in STOPWORDS]
         slug = "-".join(words)
-        slug = re.sub(r"-+", "-", slug).strip("-")
-        return slug
+        return re.sub(r"-+", "-", slug).strip("-")
 
     @staticmethod
     def shorten_title(
@@ -142,10 +199,7 @@ class PathHelper:
         """Create a short filename/directory component from a title."""
         slug = PathHelper.slugify(title)
         fallback_slug = PathHelper.slugify(fallback)
-
         base = slug or fallback_slug or "untitled"
-        if len(base) > max_length:
-            base = base[:max_length].rstrip("-_")
 
         if prefix:
             prefix = PathHelper.sanitize_component(prefix)
@@ -160,30 +214,33 @@ class PathHelper:
     @staticmethod
     def course_dir_name(course_url: str, course_title: str) -> str:
         """Prefer the short course code from the URL for the course directory."""
-        course_id = course_url.rstrip("/").split("/")[-1].lower()
+        parsed = urlparse(course_url)
+        course_id = parsed.path.rstrip("/").split("/")[-1].lower()
         course_id = PathHelper.sanitize_component(course_id)
-
         if course_id:
             return course_id[:MAX_COURSE_DIR_LENGTH]
-
         return PathHelper.shorten_title(
-            course_title,
-            fallback=course_title,
-            max_length=MAX_COURSE_DIR_LENGTH,
+            course_title, fallback=course_title, max_length=MAX_COURSE_DIR_LENGTH
         )
 
     @staticmethod
     def ensure_path_length(path: str, max_length: int = MAX_FULL_PATH_LENGTH) -> str:
-        """Trim the file name if the full path would become too long."""
+        """Trim the file stem if the full path would become too long."""
         normalized_path = os.path.normpath(path)
         if len(normalized_path) <= max_length:
             return path
 
-        directory, filename = os.path.split(path)
+        directory, filename = os.path.split(normalized_path)
         stem, extension = os.path.splitext(filename)
         overflow = len(normalized_path) - max_length
-        shortened_stem_length = max(8, len(stem) - overflow)
-        shortened_stem = stem[:shortened_stem_length].rstrip("-_. ") or "file"
+        shortened_stem_length = len(stem) - overflow
+
+        if shortened_stem_length < 1:
+            shortened_stem = "file"
+        else:
+            shortened_stem_length = max(8, shortened_stem_length)
+            shortened_stem = stem[:shortened_stem_length].rstrip("-_. ") or "file"
+
         return os.path.join(directory, f"{shortened_stem}{extension}")
 
 
@@ -223,6 +280,7 @@ class CatalogService:
     def fetch(self) -> Optional[dict]:
         """Fetch the Microsoft Learn Catalog API."""
         try:
+            print("Fetching Microsoft Learn catalog (this may take a moment)...")
             response = self.http_client.get(CATALOG_API_URL)
             response.raise_for_status()
             self._catalog = response.json()
@@ -252,21 +310,17 @@ class CatalogService:
             return []
 
         study_guide = target_course.get("study_guide", [])
-        learning_path_uids = [
+        lp_uids = [
             item["uid"] for item in study_guide if item.get("type") == "learningPath"
         ]
-
         lp_lookup = {
             lp.get("uid"): lp.get("url") for lp in catalog.get("learningPaths", [])
         }
-
-        path_urls = []
-        for uid in learning_path_uids:
-            url = lp_lookup.get(uid)
-            if url:
-                path_urls.append(self._clean_url(url))
-
-        return path_urls
+        return [
+            self._clean_url(lp_lookup[uid])
+            for uid in lp_uids
+            if lp_lookup.get(uid)
+        ]
 
     def get_learning_path_modules(self, path_url: str) -> list[str]:
         """Get all module URLs for a learning path."""
@@ -278,7 +332,6 @@ class CatalogService:
         target_lp = self._find_learning_path_by_name(
             path_name, catalog.get("learningPaths", [])
         )
-
         if not target_lp:
             return []
 
@@ -286,32 +339,40 @@ class CatalogService:
         module_lookup = {
             mod.get("uid"): mod.get("url") for mod in catalog.get("modules", [])
         }
-
-        module_urls = []
-        for uid in module_uids:
-            url = module_lookup.get(uid)
-            if url:
-                module_urls.append(self._clean_url(url))
-
-        return module_urls
+        return [
+            self._clean_url(module_lookup[uid])
+            for uid in module_uids
+            if module_lookup.get(uid)
+        ]
 
     @staticmethod
     def _extract_id_from_url(url: str) -> str:
-        """Extract the ID from a URL."""
-        return url.rstrip("/").split("/")[-1]
+        """Extract the last path segment from a URL, ignoring query strings."""
+        return urlparse(url).path.rstrip("/").split("/")[-1]
 
     @staticmethod
     def _clean_url(url: str) -> str:
         """Remove query parameters from URL."""
-        return url.split("?")[0]
+        parsed = urlparse(url)
+        return f"{parsed.scheme}://{parsed.netloc}{parsed.path}"
 
     @staticmethod
     def _find_course_by_id(course_id: str, courses: list[dict]) -> Optional[dict]:
-        """Find a course by its ID (case-insensitive partial match)."""
+        """Find a course by its ID using exact or suffix matching.
+
+        Avoids false positives from substring matching (e.g. 'az-10' matching 'az-104t00').
+        """
         course_id_lower = course_id.lower()
+        # Pass 1: exact match or exact last dotted segment
         for course in courses:
-            uid = course.get("uid", "")
-            if course_id_lower in uid.lower():
+            uid = course.get("uid", "").lower()
+            last_segment = uid.rsplit(".", 1)[-1] if "." in uid else uid
+            if uid == course_id_lower or last_segment == course_id_lower:
+                return course
+        # Pass 2: uid ends with the course id (e.g. 'learn.microsoft.com.az-140t00')
+        for course in courses:
+            uid = course.get("uid", "").lower()
+            if uid.endswith(course_id_lower):
                 return course
         return None
 
@@ -319,10 +380,12 @@ class CatalogService:
     def _find_learning_path_by_name(
         path_name: str, learning_paths: list[dict]
     ) -> Optional[dict]:
-        """Find a learning path by its name in the URL."""
+        """Find a learning path by exact last URL segment match."""
+        path_name_lower = path_name.lower()
         for lp in learning_paths:
             lp_url = lp.get("url", "")
-            if path_name in lp_url:
+            last_segment = urlparse(lp_url).path.rstrip("/").split("/")[-1].lower()
+            if last_segment == path_name_lower:
                 return lp
         return None
 
@@ -343,80 +406,70 @@ class ContentService:
         try:
             response = self.http_client.get(url)
             response.raise_for_status()
-
             soup = BeautifulSoup(response.content, "html.parser")
             title = self._extract_title(soup)
             content = self._extract_content(soup, url)
-
             return PageContent(title=title, content=content, url=url)
-
         except requests.RequestException as e:
-            print(f"Error fetching {url}: {e}")
+            print(f"      Warning: Could not fetch {url}: {e}")
             return PageContent(
-                title="Error", content=f"<p>Error loading content: {e}</p>", url=url
+                title="Error",
+                content=f"<p>Error loading content: {html.escape(str(e))}</p>",
+                url=url,
             )
 
     def fetch_unit_links(self, module_url: str) -> list[str]:
-        """Fetch all unit links from a module URL."""
+        """Fetch all unit links from a module page."""
         try:
             response = self.http_client.get(module_url)
             response.raise_for_status()
-
             soup = BeautifulSoup(response.content, "html.parser")
-            matching_links = set()
+            matching_links: set[str] = set()
+
+            # Ensure the prefix ends with "/" so we don't accidentally match
+            # other modules whose URL starts with the same characters.
+            module_prefix = module_url.rstrip("/") + "/"
 
             for link in soup.find_all("a", href=True):
-                href = link["href"]
-                full_url = urljoin(module_url, href)
+                full_url = urljoin(module_url, link["href"])
                 parsed = urlparse(full_url)
                 clean_url = f"{parsed.scheme}://{parsed.netloc}{parsed.path}"
-
-                if clean_url.startswith(module_url) and clean_url != module_url:
-                    matching_links.add(clean_url)
+                if clean_url.startswith(module_prefix):
+                    matching_links.add(clean_url.rstrip("/"))
 
             return sorted(matching_links, key=self._extract_sort_key)
-
         except requests.RequestException as e:
-            print(f"Error fetching units from {module_url}: {e}")
+            print(f"      Warning: Could not fetch units from {module_url}: {e}")
             return []
 
     @staticmethod
     def _extract_title(soup: BeautifulSoup) -> str:
-        """Extract the page title from the h1 tag."""
         title_tag = soup.find("h1")
         return title_tag.get_text(strip=True) if title_tag else "Untitled"
 
     @staticmethod
     def _extract_content(soup: BeautifulSoup, base_url: str) -> str:
-        """Extract and clean the main content from the page."""
         content_div = (
             soup.find("article")
             or soup.find("main")
             or soup.find("div", class_="content")
         )
-
         if not content_div:
-            return f"<p>Could not extract content from {base_url}</p>"
-
+            return f"<p>Could not extract content from {html.escape(base_url)}</p>"
         ContentService._clean_navigation_elements(content_div)
         ContentService._fix_image_urls(content_div, base_url)
-
         return str(content_div)
 
     @staticmethod
     def _clean_navigation_elements(content_div) -> None:
-        """Remove navigation and UI elements from content."""
         for nav in content_div.find_all(["nav", "aside", "footer"]):
             nav.decompose()
-
-        selectors_to_remove = [
+        for selector in [
             ".font-size-sm.margin-top-md.display-none-print",
             ".button.button-clear.button-primary.button-sm.inner-focus",
-        ]
-        for selector in selectors_to_remove:
+        ]:
             for elem in content_div.select(selector):
                 elem.decompose()
-
         for elem in content_div.find_all(
             class_=lambda x: x and "background-color-body" in x
         ):
@@ -424,12 +477,10 @@ class ContentService:
 
     @staticmethod
     def _fix_image_urls(content_div, base_url: str) -> None:
-        """Convert relative image URLs to absolute."""
         for img in content_div.find_all("img"):
             src = img.get("src")
             if src:
                 img["src"] = urljoin(base_url, src)
-
             srcset = img.get("srcset")
             if srcset:
                 new_srcset = []
@@ -442,11 +493,9 @@ class ContentService:
 
     @staticmethod
     def _extract_sort_key(url: str) -> int | float:
-        """Extract numeric prefix from URL path for sorting."""
         match = re.search(r"/([^/]+)$", url)
         if match:
-            segment = match.group(1)
-            num_match = re.match(r"^(\d+)", segment)
+            num_match = re.match(r"^(\d+)", match.group(1))
             if num_match:
                 return int(num_match.group(1))
         return float("inf")
@@ -472,60 +521,52 @@ class HtmlGenerator:
     ) -> str:
         """Generate a combined HTML file with all unit contents."""
         module_data = self.content_service.fetch_page(module_url)
-        module_slug_fallback = module_url.rstrip("/").split("/")[-1]
+        module_slug_fallback = urlparse(module_url).path.rstrip("/").split("/")[-1]
         file_stem = PathHelper.shorten_title(
             module_data.title,
             fallback=module_slug_fallback,
             max_length=MAX_MODULE_FILE_STEM_LENGTH,
             prefix=f"{numbered_prefix}-",
         )
-
-        html_filename = f"{file_stem}.html"
         output_file = PathHelper.ensure_path_length(
-            os.path.join(output_dir, html_filename)
+            os.path.join(output_dir, f"{file_stem}.html")
         )
-
-        html_content = self._build_html(module_data, unit_links)
-
         with open(output_file, "w", encoding="utf-8") as f:
-            f.write(html_content)
-
+            f.write(self._build_html(module_data, unit_links))
         return output_file
 
     def _build_html(self, module_data: PageContent, unit_links: list[str]) -> str:
-        """Build the complete HTML document."""
         sections = []
         for i, link in enumerate(unit_links, 1):
             page_data = self.content_service.fetch_page(link)
             sections.append(self._build_section(i, page_data))
-
         return self._build_document(module_data.title, sections)
 
     def _build_section(self, index: int, page_data: PageContent) -> str:
-        """Build a single section HTML."""
+        safe_title = html.escape(page_data.title)
+        safe_url = html.escape(page_data.url)
         return f"""
     <div class="section">
         <div class="section-header">
-            <h2>{index}. {page_data.title}</h2>
-            <a href="{page_data.url}">{page_data.url}</a>
+            <h2>{index}. {safe_title}</h2>
+            <a href="{safe_url}">{safe_url}</a>
         </div>
         <div class="content">{page_data.content}</div>
     </div>"""
 
     def _build_document(self, title: str, sections: list[str]) -> str:
-        """Build the complete HTML document structure."""
+        safe_title = html.escape(title)
         sections_html = "\n".join(sections)
-
         return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title}</title>
+    <title>{safe_title}</title>
     <style>{HTML_STYLES}</style>
 </head>
 <body>
-    <h1>{title}</h1>
+    <h1>{safe_title}</h1>
 {sections_html}
 </body>
 </html>"""
@@ -537,44 +578,132 @@ class HtmlGenerator:
 
 
 class PdfGenerator:
-    """Generator for converting HTML to PDF."""
+    """Generator for converting HTML to PDF using Playwright."""
 
     @staticmethod
-    async def convert_html_to_pdf(html_file: str, pdf_file: str) -> str:
-        """Convert an HTML file to PDF using Playwright."""
+    async def _convert_html_to_pdf(html_file: str, pdf_file: str) -> str:
         async with async_playwright() as p:
             browser = await p.chromium.launch()
             page = await browser.new_page()
-
-            html_path = os.path.abspath(html_file)
-            await page.goto(f"file:///{html_path}")
-            await page.wait_for_load_state("networkidle")
-
+            # Path.as_uri() produces a correctly encoded file:/// URI on all platforms,
+            # including Windows paths with backslashes and spaces.
+            await page.goto(Path(os.path.abspath(html_file)).as_uri())
+            # "load" is reliable for local HTML; "networkidle" can hang on
+            # slow or blocked external resources (e.g. images from learn.microsoft.com).
+            await page.wait_for_load_state("load")
             await page.pdf(
                 path=pdf_file,
                 format="A4",
-                margin={
-                    "top": "20px",
-                    "right": "20px",
-                    "bottom": "20px",
-                    "left": "20px",
-                },
+                margin={"top": "20px", "right": "20px", "bottom": "20px", "left": "20px"},
                 print_background=True,
             )
-
             await browser.close()
-
         return pdf_file
 
     def generate(self, html_file: str) -> Optional[str]:
-        """Generate PDF from HTML file, handling errors gracefully."""
-        pdf_file = PathHelper.ensure_path_length(html_file.replace(".html", ".pdf"))
+        """Generate a PDF from an HTML file, handling errors gracefully."""
+        stem, _ = os.path.splitext(html_file)
+        pdf_file = PathHelper.ensure_path_length(f"{stem}.pdf")
         try:
-            asyncio.run(self.convert_html_to_pdf(html_file, pdf_file))
+            asyncio.run(self._convert_html_to_pdf(html_file, pdf_file))
             return pdf_file
         except Exception as e:
-            print(f"      Warning: Failed to generate PDF: {e}")
+            print(f"      Warning: PDF generation failed: {e}")
             return None
+
+
+# =============================================================================
+# Index Generator
+# =============================================================================
+
+
+class IndexGenerator:
+    """Generates an index.html overview page in the course root directory."""
+
+    @staticmethod
+    def generate(
+        course_title: str,
+        course_url: str,
+        course_output_dir: str,
+        lp_entries: list[LearningPathIndexEntry],
+    ) -> str:
+        """Write index.html to the course root and return its path."""
+        index_path = os.path.join(course_output_dir, "index.html")
+        content = IndexGenerator._build(
+            course_title, course_url, course_output_dir, lp_entries
+        )
+        with open(index_path, "w", encoding="utf-8") as f:
+            f.write(content)
+        return index_path
+
+    @staticmethod
+    def _build(
+        course_title: str,
+        course_url: str,
+        course_output_dir: str,
+        lp_entries: list[LearningPathIndexEntry],
+    ) -> str:
+        safe_title = html.escape(course_title)
+        safe_url = html.escape(course_url)
+        lp_blocks = "\n".join(
+            IndexGenerator._lp_block(lp, course_output_dir)
+            for lp in lp_entries
+        )
+        return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{safe_title}</title>
+    <style>{INDEX_STYLES}</style>
+</head>
+<body>
+    <h1>{safe_title}</h1>
+    <p class="course-url">
+        Source: <a href="{safe_url}" target="_blank">{safe_url}</a>
+    </p>
+{lp_blocks}
+    <p class="footer">Generated by Microsoft Learn Course Extractor</p>
+</body>
+</html>"""
+
+    @staticmethod
+    def _lp_block(lp: LearningPathIndexEntry, course_output_dir: str) -> str:
+        safe_title = html.escape(lp.lp_title)
+        safe_url = html.escape(lp.lp_url)
+        module_items = "\n".join(
+            IndexGenerator._module_item(mod, course_output_dir)
+            for mod in lp.modules
+        )
+        return f"""    <div class="lp-block">
+        <div class="lp-header">
+            <span class="lp-num">{lp.lp_index:02d}</span>
+            <a href="{safe_url}" target="_blank">{safe_title}</a>
+        </div>
+        <ul class="module-list">
+{module_items}
+        </ul>
+    </div>"""
+
+    @staticmethod
+    def _module_item(mod: ModuleIndexEntry, course_output_dir: str) -> str:
+        safe_title = html.escape(mod.module_title)
+        num_label = f"{mod.lp_index:02d}-{mod.module_index:02d}"
+        links_html = ""
+
+        if mod.html_file and os.path.exists(mod.html_file):
+            rel = os.path.relpath(mod.html_file, course_output_dir).replace("\\", "/")
+            links_html += f'<a class="link-html" href="{html.escape(rel)}">HTML</a>'
+
+        if mod.pdf_file and os.path.exists(mod.pdf_file):
+            rel = os.path.relpath(mod.pdf_file, course_output_dir).replace("\\", "/")
+            links_html += f'<a class="link-pdf" href="{html.escape(rel)}">PDF</a>'
+
+        return f"""            <li>
+                <span class="module-num">{num_label}</span>
+                <span class="module-title">{safe_title}</span>
+                <span class="file-links">{links_html}</span>
+            </li>"""
 
 
 # =============================================================================
@@ -587,122 +716,186 @@ class CourseProcessor:
 
     def __init__(
         self,
+        output_format: str = OUTPUT_FORMAT_BOTH,
         catalog_service: Optional[CatalogService] = None,
         content_service: Optional[ContentService] = None,
         html_generator: Optional[HtmlGenerator] = None,
         pdf_generator: Optional[PdfGenerator] = None,
     ):
+        self.output_format = output_format
         self.catalog_service = catalog_service or CatalogService()
         self.content_service = content_service or ContentService()
         self.html_generator = html_generator or HtmlGenerator(self.content_service)
         self.pdf_generator = pdf_generator or PdfGenerator()
 
     def process_course(
-        self, course_url: str, output_base: str = OUTPUT_BASE_DIR
+        self, course_url: str, output_base: str = DEFAULT_OUTPUT_BASE_DIR
     ) -> list[str]:
         """Process a course and generate all output files."""
         print(f"\nFetching learning paths from: {course_url}")
         print("=" * 80)
 
+        # Resolve to absolute path so all console output shows full paths.
+        output_base = os.path.abspath(output_base)
         course_title = self._fetch_course_title(course_url)
         course_dir_name = PathHelper.course_dir_name(course_url, course_title)
         course_output_dir = os.path.join(output_base, course_dir_name)
 
         catalog = self.catalog_service.fetch()
         if not catalog:
-            print("Failed to fetch catalog.")
+            print("Error: Failed to fetch the Microsoft Learn catalog. Check your internet connection.")
             return []
 
         paths = self.catalog_service.get_course_learning_paths(course_url)
-
         if not paths:
-            print("\nNo learning paths found.")
+            print("\nNo learning paths found for this course.")
+            print("Make sure the URL points to a valid Microsoft Learn course page.")
             return []
 
         self._display_learning_paths(paths)
 
         os.makedirs(course_output_dir, exist_ok=True)
-        print(f"\n  Course: {course_title}")
+        print(f"\n  Course:           {course_title}")
         print(f"  Course directory: {course_dir_name}")
-        print(f"  Output directory: {course_output_dir}/")
+        print(f"  Output directory: {course_output_dir}")
+        print(f"  Output format:    {self.output_format.upper()}")
 
-        for i, path in enumerate(paths, 1):
-            self._process_learning_path(path, i, course_output_dir)
+        lp_entries: list[LearningPathIndexEntry] = []
+        for i, path_url in enumerate(paths, 1):
+            lp_entry = self._process_learning_path(path_url, i, course_output_dir)
+            lp_entries.append(lp_entry)
+
+        # Write the course-level index.html
+        index_file = IndexGenerator.generate(
+            course_title, course_url, course_output_dir, lp_entries
+        )
 
         print(f"\n{'=' * 80}")
-        print(f"All done! Output is in '{course_output_dir}/'")
+        print("Done! Output is saved in:")
+        print(f"  {course_output_dir}")
+        print(f"  Index: {index_file}")
 
         return paths
 
     def _fetch_course_title(self, course_url: str) -> str:
-        """Fetch the course page and extract the h1 title."""
         try:
-            page_content = self.content_service.fetch_page(course_url)
-            return page_content.title
+            return self.content_service.fetch_page(course_url).title
         except Exception as e:
             print(f"Warning: Could not fetch course title: {e}")
-            return course_url.rstrip("/").split("/")[-1]
+            return urlparse(course_url).path.rstrip("/").split("/")[-1]
 
     def _display_learning_paths(self, paths: list[str]) -> None:
-        """Display the found learning paths."""
         print(f"\nFound {len(paths)} learning path(s):\n")
         for i, path in enumerate(paths, 1):
-            print(f"{i}. {path}")
+            print(f"  {i}. {path}")
         print("\n" + "=" * 80)
         print("Creating directories and generating content...")
 
     def _process_learning_path(
-        self, path_url: str, index: int, output_base: str
-    ) -> None:
-        """Process a single learning path."""
+        self, path_url: str, lp_index: int, output_base: str
+    ) -> LearningPathIndexEntry:
+        """Process a single learning path and return its index entry."""
         print(f"\nFetching learning path page: {path_url}")
 
         path_data = self.content_service.fetch_page(path_url)
-        path_slug_fallback = path_url.rstrip("/").split("/")[-1]
+        path_slug_fallback = urlparse(path_url).path.rstrip("/").split("/")[-1]
         numbered_name = PathHelper.shorten_title(
             path_data.title,
             fallback=path_slug_fallback,
             max_length=MAX_LEARNING_PATH_DIR_LENGTH,
-            prefix=f"{index:02d}-",
+            prefix=f"{lp_index:02d}-",
         )
         path_dir = os.path.join(output_base, numbered_name)
-
         os.makedirs(path_dir, exist_ok=True)
+
         print(f"\nLearning Path: {path_data.title}")
         print(f"  Directory: {numbered_name}")
-        print(f"  Created: {path_dir}/")
+        print(f"  Created:   {path_dir}")
+
+        lp_entry = LearningPathIndexEntry(
+            lp_index=lp_index,
+            lp_title=path_data.title,
+            lp_url=path_url,
+            lp_dir=path_dir,
+        )
 
         modules = self.catalog_service.get_learning_path_modules(path_url)
-
         if modules:
             for j, module_url in enumerate(modules, 1):
-                self._process_module(module_url, j, path_dir)
+                mod_entry = self._process_module(module_url, lp_index, j, path_dir)
+                lp_entry.modules.append(mod_entry)
         else:
             print("    (No modules found for this learning path)")
 
-    def _process_module(self, module_url: str, index: int, path_dir: str) -> None:
-        """Process a single module."""
-        module_name = module_url.rstrip("/").split("/")[-1]
+        return lp_entry
+
+    def _process_module(
+        self, module_url: str, lp_index: int, module_index: int, path_dir: str
+    ) -> ModuleIndexEntry:
+        """Process a single module and return its index entry."""
+        module_name = urlparse(module_url).path.rstrip("/").split("/")[-1]
         print(f"\n    Module: {module_name}")
-
         print("      Fetching units...")
-        unit_links = self.content_service.fetch_unit_links(module_url)
 
+        unit_links = self.content_service.fetch_unit_links(module_url)
         if not unit_links:
-            print("      No units found for this module")
-            return
+            print("      No units found for this module.")
+            return ModuleIndexEntry(
+                lp_index=lp_index,
+                module_index=module_index,
+                module_title=module_name,
+                module_url=module_url,
+                html_file=None,
+                pdf_file=None,
+            )
 
         print(f"      Found {len(unit_links)} unit(s)")
 
-        numbered_prefix = f"{index:02d}"
-        html_file = self.html_generator.generate_module_html(
+        # Filename prefix includes both LP number and module number: e.g. "06-02"
+        numbered_prefix = f"{lp_index:02d}-{module_index:02d}"
+
+        html_file: Optional[str] = self.html_generator.generate_module_html(
             module_url, unit_links, path_dir, numbered_prefix
         )
-        print(f"      Generated: {html_file}")
+        pdf_file: Optional[str] = None
 
-        pdf_file = self.pdf_generator.generate(html_file)
-        if pdf_file:
-            print(f"      Generated: {pdf_file}")
+        if self.output_format in (OUTPUT_FORMAT_PDF, OUTPUT_FORMAT_BOTH):
+            pdf_file = self.pdf_generator.generate(html_file)
+
+        if self.output_format == OUTPUT_FORMAT_PDF:
+            # PDF-only: remove the intermediate HTML file after conversion.
+            if html_file and os.path.exists(html_file):
+                try:
+                    os.remove(html_file)
+                except OSError as e:
+                    print(f"      Warning: Could not remove intermediate HTML: {e}")
+            html_file = None
+            if pdf_file:
+                print(f"      PDF:  {pdf_file}")
+            else:
+                print("      PDF generation failed; no output for this module.")
+        elif self.output_format == OUTPUT_FORMAT_HTML:
+            print(f"      HTML: {html_file}")
+        else:  # both
+            print(f"      HTML: {html_file}")
+            if pdf_file:
+                print(f"      PDF:  {pdf_file}")
+
+        # Fetch the module title for the index page.
+        module_title = module_name
+        try:
+            module_title = self.content_service.fetch_page(module_url).title
+        except Exception:
+            pass
+
+        return ModuleIndexEntry(
+            lp_index=lp_index,
+            module_index=module_index,
+            module_title=module_title,
+            module_url=module_url,
+            html_file=html_file,
+            pdf_file=pdf_file,
+        )
 
 
 # =============================================================================
@@ -710,13 +903,90 @@ class CourseProcessor:
 # =============================================================================
 
 
-def get_course_url_from_user(default_url: str = DEFAULT_COURSE_URL) -> str:
-    """Prompt user for course URL with default value."""
+def validate_course_url(url: str) -> bool:
+    """Return True if the URL looks like a valid Microsoft Learn course URL."""
+    try:
+        parsed = urlparse(url)
+        return (
+            parsed.scheme in ("http", "https")
+            and "learn.microsoft.com" in parsed.netloc
+            and LEARN_COURSE_PATH_PREFIX in parsed.path
+        )
+    except Exception:
+        return False
+
+
+def get_course_url_from_user() -> str:
+    """Prompt the user for a Microsoft Learn course URL."""
     print(
-        f"Enter the Microsoft Learn course URL (press Enter to use default: {default_url}):"
+        "Enter the Microsoft Learn course URL."
+        "\n  Example: https://learn.microsoft.com/en-us/training/courses/az-140t00"
     )
-    course_url = input("> ").strip()
-    return course_url if course_url else default_url
+    while True:
+        course_url = input("> ").strip().strip('"')
+        if not course_url:
+            print("  Please enter a URL.")
+            continue
+        if not validate_course_url(course_url):
+            print(
+                "  That does not look like a valid Microsoft Learn course URL.\n"
+                "  Expected format: https://learn.microsoft.com/.../training/courses/<course-code>\n"
+                "  Please try again."
+            )
+            continue
+        return course_url
+
+
+def get_output_base_from_user() -> str:
+    """Prompt the user for the output base directory."""
+    default_display = os.path.abspath(DEFAULT_OUTPUT_BASE_DIR)
+    print(
+        f"\nEnter the output directory"
+        f" (press Enter to use current directory: {default_display}):"
+    )
+    output_base = input("> ").strip().strip('"')
+
+    if not output_base:
+        return DEFAULT_OUTPUT_BASE_DIR
+
+    if not os.path.exists(output_base):
+        try:
+            os.makedirs(output_base, exist_ok=True)
+            print(f"  Created output directory: {os.path.abspath(output_base)}")
+        except OSError as e:
+            print(f"  Warning: Could not create directory '{output_base}': {e}")
+            print(f"  Falling back to current directory: {default_display}")
+            return DEFAULT_OUTPUT_BASE_DIR
+
+    return output_base
+
+
+def get_output_format_from_user() -> str:
+    """Ask the user which output format to generate."""
+    print(
+        "\nWhich output format do you want?"
+        "\n  1 = HTML only"
+        "\n  2 = PDF only  (HTML is generated as intermediate and then removed)"
+        "\n  3 = Both HTML and PDF  [default]"
+    )
+    mapping = {
+        "1": OUTPUT_FORMAT_HTML,
+        "2": OUTPUT_FORMAT_PDF,
+        "3": OUTPUT_FORMAT_BOTH,
+        "":  OUTPUT_FORMAT_BOTH,
+    }
+    labels = {
+        OUTPUT_FORMAT_HTML: "HTML only",
+        OUTPUT_FORMAT_PDF:  "PDF only",
+        OUTPUT_FORMAT_BOTH: "HTML + PDF",
+    }
+    while True:
+        choice = input("> ").strip()
+        if choice in mapping:
+            selected = mapping[choice]
+            print(f"  Output format: {labels[selected]}")
+            return selected
+        print("  Please enter 1, 2 or 3 (or press Enter for the default).")
 
 
 # =============================================================================
@@ -727,8 +997,11 @@ def get_course_url_from_user(default_url: str = DEFAULT_COURSE_URL) -> str:
 def main() -> list[str]:
     """Main entry point."""
     course_url = get_course_url_from_user()
-    processor = CourseProcessor()
-    return processor.process_course(course_url)
+    output_base = get_output_base_from_user()
+    output_format = get_output_format_from_user()
+
+    processor = CourseProcessor(output_format=output_format)
+    return processor.process_course(course_url, output_base)
 
 
 if __name__ == "__main__":
