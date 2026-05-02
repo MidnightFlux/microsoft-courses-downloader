@@ -430,7 +430,14 @@ class PdfGenerator:
 
             html_path = os.path.abspath(html_file)
             await page.goto(f"file:///{html_path}")
-            await page.wait_for_load_state("networkidle")
+            # networkidle waits for all network requests to complete, but the generated
+            # HTML references external images (e.g. from learn.microsoft.com) that may
+            # never fully load; without a timeout this blocks indefinitely and causes
+            # PDF generation to fail silently — text content is already rendered at this point
+            try:
+                await page.wait_for_load_state("networkidle", timeout=10000)
+            except Exception:
+                pass
 
             await page.pdf(
                 path=pdf_file,
