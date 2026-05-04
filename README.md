@@ -36,7 +36,7 @@ You're welcome. Now go pass that exam.
 
 ## What It Does
 
-Azure Training Extract is a Python tool that pulls content from Microsoft Learn courses and converts them into organized, readable documents.
+Microsoft Courses Downloader is a Python tool that pulls content from Microsoft Learn courses and converts them into organized, readable documents.
 
 - **Course Extraction**: Fetches learning paths and modules from any Microsoft Learn course URL
 - **Catalog API Integration**: Uses the official Microsoft Learn Catalog API for accurate course structure
