@@ -302,6 +302,18 @@ class ContentService:
         ):
             elem.decompose()
 
+        # Remove <div> elements with xp-tag class (position tags)
+        for elem in content_div.find_all("div", class_="xp-tag"):
+            elem.decompose()
+
+        # Remove <ul> elements with metadata page-metadata class
+        for elem in content_div.find_all("ul", class_="metadata page-metadata"):
+            elem.decompose()
+
+        # Remove <div> elements with embeddedvideo class
+        for elem in content_div.find_all("div", class_="embeddedvideo"):
+            elem.decompose()
+
     @staticmethod
     def _fix_image_urls(content_div, base_url: str) -> None:
         """Convert relative image URLs to absolute."""
