@@ -379,9 +379,13 @@ class HtmlGenerator:
     def _build_html(self, module_data: PageContent, unit_links: list[str]) -> str:
         """Build the complete HTML document."""
         sections = []
-        for i, link in enumerate(unit_links, 1):
+        index = 1
+        for link in unit_links:
             page_data = self.content_service.fetch_page(link)
-            sections.append(self._build_section(i, page_data))
+            if "Knowledge check" in page_data.title or "Module assessment" in page_data.title or "Exercise - " in page_data.title:
+                continue
+            sections.append(self._build_section(index, page_data))
+            index += 1
 
         return self._build_document(module_data.title, sections)
 
