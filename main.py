@@ -316,6 +316,10 @@ class ContentService:
         for elem in content_div.find_all("div", class_="embeddedvideo"):
             elem.decompose()
 
+        # Remove video pivot elements
+        for elem in content_div.find_all("div", class_="zone has-pivot", attrs={"data-pivot": "video"}):
+            elem.decompose()
+
     @staticmethod
     def _fix_image_urls(content_div, base_url: str) -> None:
         """Convert relative image URLs to absolute."""
