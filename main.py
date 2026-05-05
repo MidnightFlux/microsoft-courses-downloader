@@ -28,6 +28,8 @@ DEFAULT_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.0"
 }
 
+PAGE_TITLE_IGNORE = ("Knowledge check", "Module assessment", "Exercise - ")
+
 HTML_STYLES = """
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
     h1 { color: #0078d4; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
@@ -382,7 +384,7 @@ class HtmlGenerator:
         index = 1
         for link in unit_links:
             page_data = self.content_service.fetch_page(link)
-            if "Knowledge check" in page_data.title or "Module assessment" in page_data.title or "Exercise - " in page_data.title:
+            if page_data.title.startswith(PAGE_TITLE_IGNORE):
                 continue
             sections.append(self._build_section(index, page_data))
             index += 1
