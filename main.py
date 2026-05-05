@@ -33,7 +33,7 @@ PAGE_TITLE_IGNORE = ("Knowledge check", "Module assessment", "Exercise - ")
 HTML_STYLES = """
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
     h1 { color: #0078d4; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
-    h2 { color: #333; margin-top: 40px; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+    h2 { color: #333; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 0px; margin-bottom: 0px; }
     .section { margin-bottom: 40px; }
     .section-header { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
     .section-header a { color: #0078d4; text-decoration: none; }
