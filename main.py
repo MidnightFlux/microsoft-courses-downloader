@@ -316,6 +316,10 @@ class ContentService:
         for elem in content_div.find_all("div", class_="embeddedvideo"):
             elem.decompose()
 
+        # Remove <div> elements with CAUTION class
+        for elem in content_div.find_all("div", class_="CAUTION"):
+            elem.decompose()
+
         # Remove video pivot elements
         for elem in content_div.find_all("div", class_="zone has-pivot", attrs={"data-pivot": "video"}):
             elem.decompose()
