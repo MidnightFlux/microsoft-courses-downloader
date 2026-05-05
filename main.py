@@ -127,6 +127,16 @@ STOPWORDS = {
     "of", "on", "or", "the", "to", "using", "with",
 }
 
+# Pages whose title starts with any of these strings are skipped during HTML
+# generation because they are interactive exercises that render as static
+# content without value (empty quiz shells, sandboxes, etc.).
+# Extend this list if more page types need to be excluded.
+SKIP_PAGE_TITLE_PREFIXES = (
+    "Knowledge check",
+    "Module assessment",
+    "Exercise - ",
+)
+
 
 # =============================================================================
 # Data Classes
@@ -537,10 +547,25 @@ class HtmlGenerator:
 
     def _build_html(self, module_data: PageContent, unit_links: list[str]) -> str:
         sections = []
-        for i, link in enumerate(unit_links, 1):
+        index = 1
+        for link in unit_links:
             page_data = self.content_service.fetch_page(link)
-            sections.append(self._build_section(i, page_data))
+            if self._is_skippable_page(page_data.title):
+                print(f"        Skipping interactive page: {page_data.title}")
+                continue
+            sections.append(self._build_section(index, page_data))
+            index += 1
         return self._build_document(module_data.title, sections)
+
+    @staticmethod
+    def _is_skippable_page(title: str) -> bool:
+        """Return True for interactive pages that add no value as static HTML.
+
+        Pages like knowledge checks, module assessments and sandbox exercises
+        render as empty shells without their JavaScript runtime. Skipping them
+        keeps the output clean and avoids confusing blank sections.
+        """
+        return any(title.startswith(prefix) for prefix in SKIP_PAGE_TITLE_PREFIXES)
 
     def _build_section(self, index: int, page_data: PageContent) -> str:
         safe_title = html.escape(page_data.title)
