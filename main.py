@@ -44,11 +44,13 @@ HTML_STYLES = """
     table { border-collapse: collapse; width: 100%; margin: 15px 0; }
     th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
     th { background: #f5f5f5; }
-    .NOTE, .TIP { padding: 12px 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid; }
-    .NOTE { background-color: #e7f3ff; border-color: #0078d4; }
-    .NOTE > p:first-child { font-weight: bold; color: #0078d4; margin-top: 0; }
+    .NOTE, .TIP, .IMPORTANT { padding: 12px 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid; }
+    .IMPORTANT { background-color: #e7f3ff; border-color: #0078d4; }
+    .IMPORTANT > p:first-child { font-weight: bold; color: #0078d4; margin-top: 0; }
     .TIP { background-color: #e8f5e9; border-color: #4caf50; }
     .TIP > p:first-child { font-weight: bold; color: #2e7d32; margin-top: 0; }
+    .NOTE { background-color: #f3e5f5; border-color: #9c27b0; }
+    .NOTE > p:first-child { font-weight: bold; color: #7b1fa2; margin-top: 0; }
 """
 
 
