@@ -18,7 +18,7 @@ Now go pass that exam.
 
 ## What It Does
 
-Microsoft Courses Downloader is a Python tool that pulls content from Microsoft Learn courses and converts them into organized, readable documents.
+Microsoft Courses Downloader is a Python tool that extracts content from each module’s mini‑site in Microsoft Learn courses and turns it into clearly organized documents—one document per module.
 
 - **Course Extraction**: Fetches learning paths and modules from any Microsoft Learn course URL
 - **Catalog API Integration**: Uses the official Microsoft Learn Catalog API for accurate course structure
