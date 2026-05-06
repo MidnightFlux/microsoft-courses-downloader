@@ -279,13 +279,13 @@ class ContentService:
         if not content_div:
             return f"<p>Could not extract content from {base_url}</p>"
 
-        ContentService._clean_navigation_elements(content_div)
+        ContentService._clean_unwanted_elements(content_div)
         ContentService._fix_image_urls(content_div, base_url)
 
         return str(content_div)
 
     @staticmethod
-    def _clean_navigation_elements(content_div) -> None:
+    def _clean_unwanted_elements(content_div) -> None:
         """Remove navigation and UI elements from content."""
         # Remove navigation elements
         for nav in content_div.find_all(["nav", "aside", "footer"]):
