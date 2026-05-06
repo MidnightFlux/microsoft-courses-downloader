@@ -18,7 +18,7 @@ from playwright.async_api import async_playwright
 # Constants
 # =============================================================================
 
-DEFAULT_COURSE_URL = "https://learn.microsoft.com/en-us/training/courses/ai-102t00"
+DEFAULT_COURSE_URL = "https://learn.microsoft.com/en-us/training/courses/ai-103t00"
 CATALOG_API_URL = "https://learn.microsoft.com/api/catalog/"
 OUTPUT_BASE_DIR = "output"
 REQUEST_TIMEOUT = 30
