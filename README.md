@@ -29,6 +29,12 @@ Microsoft Courses Downloader is a Python tool that pulls content from Microsoft 
 
 ---
 
+## Sample Output
+
+![Sample output screenshot](screenshots/screen1.png)
+
+---
+
 ## Prerequisites
 
 - **Python 3.8 or higher** - [Download Python](https://www.python.org/downloads/)
