@@ -6,7 +6,7 @@
 
 ## Why this tool exists
 
-It’s 2 AM. Your Azure AI-102 exam is in three days. You’re on Microsoft Learn, clicking through 12 modules full of tiny units—each a separate page. Tabs pile up, progress vanishes, and that paragraph you read yesterday? Lost somewhere between Computer Vision and NLP.
+It’s 2 AM. Your Azure AI-103 exam is in three days. You’re on Microsoft Learn, clicking through 12 modules full of tiny units—each a separate page. Tabs pile up, progress vanishes, and that paragraph you read yesterday? Lost somewhere between Computer Vision and NLP.
 
 Microsoft Learn is great for bite-sized, month-long strolls. For actual studying, searching, or offline reading it’s a click-maze designed by a button enthusiast.
 
@@ -37,7 +37,7 @@ Microsoft Courses Downloader is a Python tool that pulls content from Microsoft 
 
 ## Prerequisites
 
-- **Python 3.8 or higher** - [Download Python](https://www.python.org/downloads/)
+- **Python 3.10 or higher** - [Download Python](https://www.python.org/downloads/)
 
 ---
 
@@ -123,10 +123,10 @@ playwright install chromium
    python main.py
    ```
 
-3. **Enter a course URL** when prompted, or press Enter to use the default (AI-102T00):
+3. **Enter a course URL** when prompted, or press Enter to use the default (AI-103T00):
 
    ```
-   Enter the Microsoft Learn course URL (press Enter to use default: https://learn.microsoft.com/en-us/training/courses/ai-102t00):
+   Enter the Microsoft Learn course URL (press Enter to use default: https://learn.microsoft.com/en-us/training/courses/ai-103t00):
    > 
    ```
 
@@ -199,7 +199,7 @@ PAGE_TITLE_IGNORE = ("Knowledge check", "Module assessment", "Exercise - ")
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.10+
 - requests
 - beautifulsoup4
 - playwright
