@@ -52,6 +52,12 @@ def is_module_url(url: str) -> bool:
     """Check if a URL is a Microsoft Learn module URL."""
     return "/modules/" in url
 
+
+def clean_url(url: str) -> str:
+    """Remove query parameters from a URL."""
+    parsed = urlparse(url)
+    return f"{parsed.scheme}://{parsed.netloc}{parsed.path}"
+
 HTML_STYLES = """
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
     h1 { color: #0078d4; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
@@ -206,7 +212,7 @@ class CatalogService:
     @staticmethod
     def _clean_url(url: str) -> str:
         """Remove query parameters from URL."""
-        return url.split("?")[0]
+        return clean_url(url)
 
     @staticmethod
     def _find_course_by_id(course_id: str, courses: list[dict]) -> Optional[dict]:
@@ -715,6 +721,7 @@ def get_url_from_user(
         f"\n  (press Enter to use default course URL: {default_course_url}):"
     )
     url = input("> ").strip()
+    url = clean_url(url) if url else default_course_url
     return url if url else default_course_url
 
 
