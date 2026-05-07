@@ -19,6 +19,8 @@ from playwright.async_api import async_playwright
 # =============================================================================
 
 DEFAULT_COURSE_URL = "https://learn.microsoft.com/en-us/training/courses/ai-103t00"
+DEFAULT_LEARNING_PATH_URL = "https://learn.microsoft.com/en-us/training/paths/develop-generative-ai-apps/"
+DEFAULT_MODULE_URL = "https://learn.microsoft.com/en-us/training/modules/prepare-azure-ai-development/"
 CATALOG_API_URL = "https://learn.microsoft.com/api/catalog/"
 OUTPUT_BASE_DIR = "output"
 REQUEST_TIMEOUT = 30
@@ -29,6 +31,26 @@ DEFAULT_HEADERS = {
 }
 
 PAGE_TITLE_IGNORE = ("Knowledge check", "Module assessment", "Exercise - ")
+
+
+# =============================================================================
+# URL Helpers
+# =============================================================================
+
+
+def is_course_url(url: str) -> bool:
+    """Check if a URL is a Microsoft Learn course URL."""
+    return "/courses/" in url
+
+
+def is_learning_path_url(url: str) -> bool:
+    """Check if a URL is a Microsoft Learn learning path URL."""
+    return "/paths/" in url
+
+
+def is_module_url(url: str) -> bool:
+    """Check if a URL is a Microsoft Learn module URL."""
+    return "/modules/" in url
 
 HTML_STYLES = """
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
@@ -544,6 +566,60 @@ class CourseProcessor:
 
         return paths
 
+    def process_learning_path(
+        self, path_url: str, output_base: str = OUTPUT_BASE_DIR
+    ) -> list[str]:
+        """Process a learning path directly (without a course wrapper)."""
+        print(f"\nFetching learning path: {path_url}")
+        print("=" * 80)
+
+        path_data = self.content_service.fetch_page(path_url)
+        path_dir_name = self._sanitize_dir_name(path_data.title)
+        path_output_dir = os.path.join(output_base, path_dir_name)
+
+        catalog = self.catalog_service.fetch()
+        if not catalog:
+            print("Failed to fetch catalog.")
+            return []
+
+        os.makedirs(path_output_dir, exist_ok=True)
+        print(f"\n  Learning Path: {path_data.title}")
+        print(f"  Output directory: {path_output_dir}/")
+
+        modules = self.catalog_service.get_learning_path_modules(path_url)
+
+        if not modules:
+            print(f"  No modules found for this learning path.")
+            return []
+
+        for j, module_url in enumerate(modules, 1):
+            self._process_module(module_url, j, path_output_dir)
+
+        print(f"\n{'=' * 80}")
+        print(f"All done! Output is in '{path_output_dir}/'")
+
+        return modules
+
+    def process_module(
+        self, module_url: str, output_base: str = OUTPUT_BASE_DIR
+    ) -> None:
+        """Process a module URL directly (without a course or learning path)."""
+        print(f"\nFetching module: {module_url}")
+        print("=" * 80)
+
+        module_data = self.content_service.fetch_page(module_url)
+        module_dir_name = self._sanitize_dir_name(module_data.title)
+        module_output_dir = os.path.join(output_base, module_dir_name)
+
+        os.makedirs(module_output_dir, exist_ok=True)
+        print(f"\n  Module: {module_data.title}")
+        print(f"  Output directory: {module_output_dir}/")
+
+        self._process_module(module_url, 1, module_output_dir)
+
+        print(f"\n{'=' * 80}")
+        print(f"All done! Output is in '{module_output_dir}/'")
+
     def _fetch_course_title(self, course_url: str) -> str:
         """Fetch the course page and extract the h1 title."""
         try:
@@ -625,13 +701,21 @@ class CourseProcessor:
 # =============================================================================
 
 
-def get_course_url_from_user(default_url: str = DEFAULT_COURSE_URL) -> str:
-    """Prompt user for course URL with default value."""
+def get_url_from_user(
+    default_course_url: str = DEFAULT_COURSE_URL,
+    default_learning_path_url: str = DEFAULT_LEARNING_PATH_URL,
+    default_module_url: str = DEFAULT_MODULE_URL,
+) -> str:
+    """Prompt user for a Microsoft Learn URL (course, learning path, or module)."""
     print(
-        f"Enter the Microsoft Learn course URL (press Enter to use default: {default_url}):"
+        f"Enter a Microsoft Learn course, learning path, or module URL"
+        f"\n Course URL example: {default_course_url}"
+        f"\n Learning path URL example: {default_learning_path_url}"
+        f"\n Module URL example: {default_module_url}"
+        f"\n  (press Enter to use default course URL: {default_course_url}):"
     )
-    course_url = input("> ").strip()
-    return course_url if course_url else default_url
+    url = input("> ").strip()
+    return url if url else default_course_url
 
 
 # =============================================================================
@@ -641,9 +725,23 @@ def get_course_url_from_user(default_url: str = DEFAULT_COURSE_URL) -> str:
 
 def main() -> list[str]:
     """Main entry point."""
-    course_url = get_course_url_from_user()
+    url = get_url_from_user()
     processor = CourseProcessor()
-    return processor.process_course(course_url)
+
+    if is_course_url(url):
+        return processor.process_course(url)
+    elif is_learning_path_url(url):
+        return processor.process_learning_path(url)
+    elif is_module_url(url):
+        processor.process_module(url)
+        return []
+    else:
+        print(
+            "Unrecognized URL type. Please provide a Microsoft Learn course URL\n"
+            "  (containing '/courses/'), learning path URL (containing '/paths/'),\n"
+            "  or module URL (containing '/modules/')."
+        )
+        return []
 
 
 if __name__ == "__main__":
