@@ -19,8 +19,8 @@ from playwright.async_api import async_playwright
 # =============================================================================
 
 DEFAULT_COURSE_URL = "https://learn.microsoft.com/en-us/training/courses/ai-103t00"
-DEFAULT_LEARNING_PATH_URL = "https://learn.microsoft.com/en-us/training/paths/develop-generative-ai-apps/"
-DEFAULT_MODULE_URL = "https://learn.microsoft.com/en-us/training/modules/prepare-azure-ai-development/"
+DEFAULT_LEARNING_PATH_URL = "https://learn.microsoft.com/en-us/training/paths/develop-generative-ai-apps"
+DEFAULT_MODULE_URL = "https://learn.microsoft.com/en-us/training/modules/prepare-azure-ai-development"
 CATALOG_API_URL = "https://learn.microsoft.com/api/catalog/"
 OUTPUT_BASE_DIR = "output"
 REQUEST_TIMEOUT = 30
@@ -31,6 +31,29 @@ DEFAULT_HEADERS = {
 }
 
 PAGE_TITLE_IGNORE = ("Knowledge check", "Module assessment", "Exercise - ")
+
+HTML_STYLES = """
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+    h1 { color: #0078d4; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
+    h2 { color: #333; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 0px; margin-bottom: 0px; }
+    .section { margin-bottom: 40px; }
+    .section-header { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .section-header a { color: #0078d4; text-decoration: none; }
+    .section-header a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; }
+    pre { background: #f4f4f4; padding: 15px; overflow-x: auto; border-radius: 5px; }
+    code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+    table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #f5f5f5; }
+    .NOTE, .TIP, .IMPORTANT { padding: 12px 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid; }
+    .IMPORTANT { background-color: #e7f3ff; border-color: #0078d4; }
+    .IMPORTANT > p:first-child { font-weight: bold; color: #0078d4; margin-top: 0; }
+    .TIP { background-color: #e8f5e9; border-color: #4caf50; }
+    .TIP > p:first-child { font-weight: bold; color: #2e7d32; margin-top: 0; }
+    .NOTE { background-color: #f3e5f5; border-color: #9c27b0; }
+    .NOTE > p:first-child { font-weight: bold; color: #7b1fa2; margin-top: 0; }
+"""
 
 
 # =============================================================================
@@ -57,29 +80,6 @@ def clean_url(url: str) -> str:
     """Remove query parameters from a URL."""
     parsed = urlparse(url)
     return f"{parsed.scheme}://{parsed.netloc}{parsed.path}"
-
-HTML_STYLES = """
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
-    h1 { color: #0078d4; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
-    h2 { color: #333; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 0px; margin-bottom: 0px; }
-    .section { margin-bottom: 40px; }
-    .section-header { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-    .section-header a { color: #0078d4; text-decoration: none; }
-    .section-header a:hover { text-decoration: underline; }
-    img { max-width: 100%; height: auto; }
-    pre { background: #f4f4f4; padding: 15px; overflow-x: auto; border-radius: 5px; }
-    code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
-    table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    th { background: #f5f5f5; }
-    .NOTE, .TIP, .IMPORTANT { padding: 12px 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid; }
-    .IMPORTANT { background-color: #e7f3ff; border-color: #0078d4; }
-    .IMPORTANT > p:first-child { font-weight: bold; color: #0078d4; margin-top: 0; }
-    .TIP { background-color: #e8f5e9; border-color: #4caf50; }
-    .TIP > p:first-child { font-weight: bold; color: #2e7d32; margin-top: 0; }
-    .NOTE { background-color: #f3e5f5; border-color: #9c27b0; }
-    .NOTE > p:first-child { font-weight: bold; color: #7b1fa2; margin-top: 0; }
-"""
 
 
 # =============================================================================

@@ -1,2 +1,4 @@
 output/
 .kilo/
+.playwright-mcp/
+__pycache__/
