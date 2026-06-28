@@ -33,26 +33,132 @@ DEFAULT_HEADERS = {
 PAGE_TITLE_IGNORE = ("Knowledge check", "Module assessment", "Exercise - ")
 
 HTML_STYLES = """
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
-    h1 { color: #0078d4; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
-    h2 { color: #333; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 0px; margin-bottom: 0px; }
+    :root {
+        color-scheme: light;
+        --page-bg: #f8fafc;
+        --page-text: #0f172a;
+        --page-link: #0078d4;
+        --heading-1: #0078d4;
+        --heading-2: #1f2937;
+        --section-bg: #f5f5f5;
+        --section-border: #d1d5db;
+        --surface-bg: #f4f4f4;
+        --surface-border: #d1d5db;
+        --table-head-bg: #f5f5f5;
+        --callout-bg: #eef2ff;
+        --important-border: #0078d4;
+        --important-text: #0078d4;
+        --tip-border: #4caf50;
+        --tip-text: #2e7d32;
+        --note-border: #9c27b0;
+        --note-text: #7b1fa2;
+        --button-bg: #111827;
+        --button-text: #f8fafc;
+        --button-border: #334155;
+    }
+    :root[data-theme="dark"] {
+        color-scheme: dark;
+        --page-bg: #0f172a;
+        --page-text: #e5e7eb;
+        --page-link: #7dd3fc;
+        --heading-1: #93c5fd;
+        --heading-2: #f3f4f6;
+        --section-bg: #111827;
+        --section-border: #334155;
+        --surface-bg: #111827;
+        --surface-border: #334155;
+        --table-head-bg: #1e293b;
+        --callout-bg: #111827;
+        --important-border: #38bdf8;
+        --important-text: #93c5fd;
+        --tip-border: #4ade80;
+        --tip-text: #86efac;
+        --note-border: #c084fc;
+        --note-text: #d8b4fe;
+        --button-bg: #f8fafc;
+        --button-text: #0f172a;
+        --button-border: #cbd5e1;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; background: var(--page-bg); color: var(--page-text); transition: background-color 0.2s ease, color 0.2s ease; }
+    a { color: var(--page-link); }
+    h1 { color: var(--heading-1); border-bottom: 2px solid var(--page-link); padding-bottom: 10px; }
+    h2 { color: var(--heading-2); border-bottom: 1px solid var(--section-border); padding-bottom: 8px; margin-top: 0px; margin-bottom: 0px; }
     .section { margin-bottom: 40px; }
-    .section-header { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-    .section-header a { color: #0078d4; text-decoration: none; }
+    .section-header { background: var(--section-bg); padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid var(--section-border); }
+    .section-header a { color: var(--page-link); text-decoration: none; }
     .section-header a:hover { text-decoration: underline; }
     img { max-width: 100%; height: auto; }
-    pre { background: #f4f4f4; padding: 15px; overflow-x: auto; border-radius: 5px; }
-    code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+    pre { background: var(--surface-bg); color: var(--page-text); padding: 15px; overflow-x: auto; border-radius: 5px; border: 1px solid var(--surface-border); }
+    code { background: var(--surface-bg); color: var(--page-text); padding: 2px 5px; border-radius: 3px; }
     table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    th { background: #f5f5f5; }
-    .NOTE, .TIP, .IMPORTANT { padding: 12px 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid; }
-    .IMPORTANT { background-color: #e7f3ff; border-color: #0078d4; }
-    .IMPORTANT > p:first-child { font-weight: bold; color: #0078d4; margin-top: 0; }
-    .TIP { background-color: #e8f5e9; border-color: #4caf50; }
-    .TIP > p:first-child { font-weight: bold; color: #2e7d32; margin-top: 0; }
-    .NOTE { background-color: #f3e5f5; border-color: #9c27b0; }
-    .NOTE > p:first-child { font-weight: bold; color: #7b1fa2; margin-top: 0; }
+    th, td { border: 1px solid var(--section-border); padding: 8px; text-align: left; }
+    th { background: var(--table-head-bg); }
+    .NOTE, .TIP, .IMPORTANT { padding: 12px 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid; background: var(--callout-bg); }
+    .IMPORTANT { border-color: var(--important-border); }
+    .IMPORTANT > p:first-child { font-weight: bold; color: var(--important-text); margin-top: 0; }
+    .TIP { border-color: var(--tip-border); }
+    .TIP > p:first-child { font-weight: bold; color: var(--tip-text); margin-top: 0; }
+    .NOTE { border-color: var(--note-border); }
+    .NOTE > p:first-child { font-weight: bold; color: var(--note-text); margin-top: 0; }
+    .theme-toggle {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 1000;
+        border: 1px solid var(--button-border);
+        background: var(--button-bg);
+        color: var(--button-text);
+        border-radius: 999px;
+        padding: 10px 14px;
+        font: inherit;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+    }
+    .theme-toggle:hover { opacity: 0.92; }
+    .theme-toggle:focus-visible { outline: 2px solid var(--page-link); outline-offset: 2px; }
+    @media (max-width: 640px) {
+        body { padding: 16px 14px 24px; }
+        .theme-toggle { top: 12px; right: 12px; padding: 9px 12px; }
+    }
+"""
+
+THEME_SCRIPT = """
+    <script>
+    (function () {
+        const storageKey = 'microsoft-courses-downloader-theme';
+        const root = document.documentElement;
+        const button = document.getElementById('theme-toggle');
+
+        function getPreferredTheme() {
+            const savedTheme = window.localStorage.getItem(storageKey);
+            if (savedTheme === 'light' || savedTheme === 'dark') {
+                return savedTheme;
+            }
+            return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+        }
+
+        function applyTheme(theme) {
+            root.setAttribute('data-theme', theme);
+            if (button) {
+                button.textContent = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+                button.setAttribute('aria-pressed', String(theme === 'dark'));
+            }
+        }
+
+        const initialTheme = getPreferredTheme();
+        applyTheme(initialTheme);
+
+        if (button) {
+            button.addEventListener('click', function () {
+                const nextTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                window.localStorage.setItem(storageKey, nextTheme);
+                applyTheme(nextTheme);
+            });
+        }
+    })();
+    </script>
 """
 
 
@@ -453,8 +559,10 @@ class HtmlGenerator:
     <style>{HTML_STYLES}</style>
 </head>
 <body>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme" aria-pressed="false">Switch to dark mode</button>
     <h1>{title}</h1>
 {sections_html}
+{THEME_SCRIPT}
 </body>
 </html>"""
 
