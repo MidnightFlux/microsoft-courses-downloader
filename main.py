@@ -7,6 +7,7 @@ import os
 import re
 import requests
 import asyncio
+import sys
 from dataclasses import dataclass
 from typing import Optional
 from bs4 import BeautifulSoup
@@ -358,6 +359,8 @@ class ContentService:
     def _fix_image_urls(content_div, base_url: str) -> None:
         """Convert relative image URLs to absolute."""
         for img in content_div.find_all("img"):
+            img["loading"] = "eager"
+
             src = img.get("src")
             if src:
                 img["src"] = urljoin(base_url, src)
@@ -485,8 +488,11 @@ class PdfGenerator:
             page = await browser.new_page()
 
             html_path = os.path.abspath(html_file)
-            await page.goto(f"file:///{html_path}")
-            await page.wait_for_load_state("networkidle")
+            await page.goto(f"file:///{html_path}", wait_until="load", timeout=120000)
+            await page.evaluate("""() => Promise.race([
+                Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))),
+                new Promise(r => setTimeout(r, 20000))
+                ])""")
 
             await page.pdf(
                 path=pdf_file,
@@ -547,7 +553,7 @@ class CourseProcessor:
         course_dir_name = self._sanitize_dir_name(course_title)
         course_output_dir = os.path.join(output_base, course_dir_name)
 
-        catalog = self.catalog_service.fetch()
+        catalog = self.catalog_service.catalog
         if not catalog:
             print("Failed to fetch catalog.")
             return []
@@ -583,7 +589,7 @@ class CourseProcessor:
         path_dir_name = self._sanitize_dir_name(path_data.title)
         path_output_dir = os.path.join(output_base, path_dir_name)
 
-        catalog = self.catalog_service.fetch()
+        catalog = self.catalog_service.catalog
         if not catalog:
             print("Failed to fetch catalog.")
             return []
@@ -730,25 +736,19 @@ def get_url_from_user(
 # =============================================================================
 
 
-def main() -> list[str]:
-    """Main entry point."""
-    url = get_url_from_user()
+def main() -> None:
+    urls = [clean_url(u) for u in sys.argv[1:]] or [get_url_from_user()]
     processor = CourseProcessor()
 
-    if is_course_url(url):
-        return processor.process_course(url)
-    elif is_learning_path_url(url):
-        return processor.process_learning_path(url)
-    elif is_module_url(url):
-        processor.process_module(url)
-        return []
-    else:
-        print(
-            "Unrecognized URL type. Please provide a Microsoft Learn course URL\n"
-            "  (containing '/courses/'), learning path URL (containing '/paths/'),\n"
-            "  or module URL (containing '/modules/')."
-        )
-        return []
+    for url in urls:
+        if is_course_url(url):
+            processor.process_course(url)
+        elif is_learning_path_url(url):
+            processor.process_learning_path(url)
+        elif is_module_url(url):
+            processor.process_module(url)
+        else:
+            print(f"Skipping unrecognized URL: {url}")
 
 
 if __name__ == "__main__":
